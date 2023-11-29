@@ -1,0 +1,150 @@
+.accountPage{
+    display: flex;
+}
+.accountPage .profilePart{
+    flex: 1;
+    padding: 30px 0;
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #152a46;
+    color: white;
+    height: 100vh;
+}
+.accountPage .profilePart h1{
+    margin-bottom: 30px;
+    font-size: 40px;
+}
+.accountPage .profilePart img{
+    width: 200px;
+    height: 200px;
+    /* margin: auto; */
+    border-radius: 50%;
+    margin-bottom: 30px;
+    
+}
+.accountPage .profilePart .username{
+    font-size: 20px;
+    font-weight: bold;
+}
+.accountPage .purchaseHistory{
+    flex:2;
+    padding: 30px;
+}
+.accountPage .purchaseHistory .purchasettl{
+    margin-bottom: 40px;
+}
+.accountPage .purchaseHistory .listTicket{
+    width: 100%;
+    box-shadow: 0px 1px 26px -1px rgba(0,0,0,0.75);
+    padding: 20px;
+    display: flex;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    /* flex-direction: column; */
+}
+/* .accountPage .purchaseHistory .listTicket .movieImg{
+    margin: auto;
+} */
+.accountPage .purchaseHistory .listTicket img{
+    width: 200px;
+    height: 300px;
+    
+}
+.accountPage .purchaseHistory .ticketDesc{
+    margin: 0 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.accountPage .purchaseHistory .ticketDesc h1{
+    font-size: 24px;
+}
+.accountPage .purchaseHistory .ticketDesc .grey{
+    color: grey;
+}
+.accountPage .purchaseHistory .ticketDesc button{
+    background-color: #2B3E58;
+    color: white;
+    font-weight: bold;
+    padding: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+}
+.accountPage .purchaseHistory .ticketDesc button:hover{
+    background-color: #152a46;
+    
+}
+.popUpDetail{
+    position: fixed;
+    background-color: rgb(0,0,0,0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+.popUpDetail .popUpDetails{
+    background-color: white;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    padding: 15px;
+}
+.popUpDetail .popUpDetails h1{
+    text-align: center;
+    margin: 0 5px;
+    margin-bottom: 5px;
+}
+.popUpDetail .popUpDetails span{
+    margin: 5px;
+}
+.popUpDetail .popUpDetails button{
+    color: white;
+    background-color: red;
+    padding: 15px 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+.popUpDetail .popUpDetails button:hover{
+    background-color: #da1111;
+}
+@media (max-width: 768px) {
+
+    .accountPage {
+        flex-direction: column;
+    }
+
+    .accountPage .profilePart {
+        position: static; 
+        height: auto;
+    }
+    
+
+}
+@media (max-width:550px){
+    .accountPage .purchaseHistory .listTicket{
+        flex-direction: column;
+    }
+    .accountPage .purchaseHistory .listTicket .movieImg{
+        margin: auto;
+    }
+    
+}
+@media (max-width:550px){
+    .popUpDetail .popUpDetails{
+        width: 100%;
+    }
+}
