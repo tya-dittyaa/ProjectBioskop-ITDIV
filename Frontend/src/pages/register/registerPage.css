@@ -1,0 +1,239 @@
+.registerPage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid red; */
+    min-height: 100vh;
+}
+.registerContainer{
+    display: flex;
+    width: 700px;
+    height: 500px;
+    border-radius: 10px;
+    box-shadow: 0px 1px 26px -1px rgba(0,0,0,0.75);
+    
+}
+.registerContainer .registerContainerLeft{
+    width: 50%;
+    background-image: url(darkTheme.jpg);
+    /* background-color: black; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-top-right-radius: 10px;
+    border-end-end-radius:10px ;
+    transform: translate(-100%);
+    transition: transform .5s;
+}
+.registerContainer .registerContainerLeft h1,.registerContainer .registerContainerLeft p{
+    opacity: 0;
+    transition: opacity 1s;
+}
+.registerContainer .registerContainerRight{
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid blue; */
+    transform: translate(100%);
+    width: 50%;
+    transition: transform .5s;
+    transition: opacity 1s;
+    padding: 25px;
+    opacity: 0;
+}
+.registerContainer .registerContainerRight h1{
+    text-align: center;
+    margin-bottom: 50px;
+    color: #2d4059;
+}
+
+.registerContainer .registerContainerRight .userPart{
+    position: relative;
+    margin-bottom: 40px;
+}
+.registerContainer .registerContainerRight .userPart input{
+    width: 100%;
+    height: 25px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+    padding: 5px 30px 5px 0;
+}
+.registerContainer .registerContainerRight .userPart label{
+    position: absolute;
+    left:0;
+    top:0;
+    transition: .5s;
+    cursor: text;
+    opacity: .5;
+}
+.registerContainer .registerContainerRight .userPart .userNotEmpty + label, 
+.registerContainer .registerContainerRight .userPart input:focus + label{
+    top: -15px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: auto;
+    opacity: 1;
+}
+.registerContainer .registerContainerRight .userPart p{
+    text-align: left;
+    color:red;
+    margin-top:3px;
+    font-size: 10px;
+    font-weight: bold;
+}
+.registerContainer .registerContainerRight .emailPart{
+    position: relative;
+    margin-bottom: 40px;
+}
+.registerContainer .registerContainerRight .emailPart input{
+    width: 100%;
+    height: 25px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+    padding: 5px 30px 5px 0;
+}
+.registerContainer .registerContainerRight .emailPart label{
+    position: absolute;
+    left:0;
+    top:0;
+    transition: .5s;
+    cursor: text;
+    opacity: .5;
+}
+.registerContainer .registerContainerRight .emailPart p{
+    text-align: left;
+    color:red;
+    margin-top:3px;
+    font-size: 10px;
+    font-weight: bold;
+}
+.registerContainer .registerContainerRight .emailPart .emailNotEmpty + label, 
+.registerContainer .registerContainerRight .emailPart input:focus + label{
+    top: -15px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: auto;
+    opacity: 1;
+}
+.registerContainer .registerContainerRight .passPart{
+    position: relative;
+    margin-bottom: 40px;
+}
+.registerContainer .registerContainerRight .passPart input{
+    width: 100%;
+    height: 25px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+    padding: 5px 30px 5px 0;
+    
+}
+.registerContainer .registerContainerRight .passPart label{
+    position: absolute;
+    left:0;
+    top:0;
+    transition: .5s;
+    cursor: text;
+    opacity: .5;
+}
+.registerContainer .registerContainerRight .passPart .passNotEmpty + label,
+.registerContainer .registerContainerRight .passPart input:focus + label{
+    top: -15px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: auto;
+    opacity: 1;
+}
+.registerContainer .registerContainerRight .passPart .visibility{
+    position: absolute;
+    right: 5px;
+    opacity: .5;
+    top:-3px;
+}
+.registerContainer .registerContainerRight .passPart p{
+    text-align: left;
+    color:red;
+    margin-top:3px;
+    font-size: 10px;
+    font-weight: bold;
+}
+.registerContainer .registerContainerRight .confirmPassPart{
+    position: relative;
+    margin: 20px 0;
+}
+.registerContainer .registerContainerRight .confirmPassPart input{
+    width: 100%;
+    height: 25px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+    padding: 5px 30px 5px 0;
+    
+}
+.registerContainer .registerContainerRight .confirmPassPart label{
+    position: absolute;
+    left:0;
+    top:0;
+    transition: .5s;
+    cursor: text;
+    opacity: .5;
+}
+.registerContainer .registerContainerRight .confirmPassPart .confirmPassNotEmpty + label,
+.registerContainer .registerContainerRight .confirmPassPart input:focus + label{
+    top: -15px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: auto;
+    opacity: 1;
+}
+.registerContainer .registerContainerRight .confirmPassPart .visibility2{
+    position: absolute;
+    right: 5px;
+    opacity: .5;
+    top:-3px;
+}
+.registerContainer .registerContainerRight .confirmPassPart p{
+    text-align: left;
+    color:red;
+    margin-top:3px;
+    font-size: 10px;
+    font-weight: bold;
+}
+.registerContainer .registerContainerRight button{
+    
+    color: white;
+    padding: 15px ;
+    font-size: 16px;
+    border-radius: 25px ;
+    margin-top: 10px;
+    width: 100%;
+    cursor: pointer;
+    background-color: #2d4059;
+    border: none;
+}
+.registerContainer .registerContainerRight p{
+    text-align: center;
+    font-size: 14px;
+    margin-top: auto;
+    
+}
+
+@media(max-width: 700px){
+    .registerContainer{
+        width: 95%;
+    }
+}
+@media(max-width: 600px){
+    
+    .registerContainer .registerContainerLeft{
+        display: none;
+    }
+    .registerContainer .registerContainerRight{
+        width: 100%;
+    }
+}
