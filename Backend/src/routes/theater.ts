@@ -12,5 +12,5 @@ theaterRoute.post("/available", async (req, res) => {
     where: { filmId: filmInput.id },
   });
 
-  return res.status(200).send(getSchedule);
+  return res.status(200).json(getSchedule);
 });

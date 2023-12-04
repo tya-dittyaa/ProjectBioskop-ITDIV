@@ -12,8 +12,8 @@ const prisma = new PrismaClient();
 userRoute.post("/register", async (req: Request, res: Response) => {
   const userInput: User = req.body;
 
-  if (!userInput.name && !userInput.email && !userInput.password) {
-    return res.status(404).json({ message: "Invalid email/password!" });
+  if (!userInput.name || !userInput.email || !userInput.password) {
+    return res.status(400).json({ message: "Invalid input request!" });
   }
 
   const checkDataExist = await prisma.user.findUnique({
@@ -44,7 +44,7 @@ userRoute.post("/register", async (req: Request, res: Response) => {
 userRoute.post("/login", async (req: Request, res: Response) => {
   const userInput: User = req.body;
 
-  if (!userInput.email && !userInput.password) {
+  if (!userInput.email || !userInput.password) {
     return res.status(404).json({ message: "Invalid email/password!" });
   }
 
