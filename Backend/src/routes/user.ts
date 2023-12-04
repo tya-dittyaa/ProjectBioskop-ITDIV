@@ -7,17 +7,21 @@ const prisma = new PrismaClient();
 
 /**
  * * User Database Register
- * * <url>/user/create
+ * * <url>/user/register
  */
 userRoute.post("/register", async (req: Request, res: Response) => {
   const userInput: User = req.body;
+
+  if (!userInput.name && !userInput.email && !userInput.password) {
+    return res.status(404).json({ message: "Invalid email/password!" });
+  }
 
   const checkDataExist = await prisma.user.findUnique({
     where: { email: userInput.email },
   });
 
   if (checkDataExist) {
-    return res.status(409).send("Email is already exist!");
+    return res.status(409).json({ message: "Email is already exist!" });
   }
 
   const dataCreate = await prisma.user.create({
@@ -30,7 +34,7 @@ userRoute.post("/register", async (req: Request, res: Response) => {
 
   return res
     .status(201)
-    .send({ message: "Successfull created!", data: dataCreate });
+    .json({ message: "Successfull created!", data: dataCreate });
 });
 
 /**
@@ -40,12 +44,16 @@ userRoute.post("/register", async (req: Request, res: Response) => {
 userRoute.post("/login", async (req: Request, res: Response) => {
   const userInput: User = req.body;
 
+  if (!userInput.email && !userInput.password) {
+    return res.status(404).json({ message: "Invalid email/password!" });
+  }
+
   const checkDataExist = await prisma.user.findFirst({
     where: { email: userInput.email, password: userInput.password },
   });
 
   if (checkDataExist) {
-    return res.status(202).send({
+    return res.status(202).json({
       message: "Successfull login!",
       user: {
         id: checkDataExist.id,
@@ -55,5 +63,5 @@ userRoute.post("/login", async (req: Request, res: Response) => {
     });
   }
 
-  return res.status(404).send({ message: "Invalid email/password!" });
+  return res.status(404).json({ message: "Invalid email/password!" });
 });

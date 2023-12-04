@@ -22,7 +22,7 @@ filmRoute.post("/add", async (req, res) => {
     },
   });
 
-  return res.status(201).send({
+  return res.status(201).json({
     message: "Successfull created!",
     data: dataCreate,
   });
@@ -36,7 +36,7 @@ filmRoute.get("/available", async (req, res) => {
     where: { isAvailable: true },
   });
 
-  return res.status(200).send(data);
+  return res.status(200).json(data);
 });
 
 /**
@@ -48,5 +48,5 @@ filmRoute.get("/top3", async (req, res) => {
     orderBy: { release_date: "desc" },
   });
 
-  return res.status(200).send(data);
+  return res.status(200).json(data);
 });

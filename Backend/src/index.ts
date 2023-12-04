@@ -9,14 +9,20 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: true,
+  })
+);
 app.use(helmet());
 app.use(bodyParser.json({ limit: "50mb", type: "application/json" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 // * Routes
-app.use("/user", routes);
 app.use("/film", routes);
+app.use("/theater", routes);
+app.use("/user", routes);
 
 // ! Error 404 Handler
 app.use((req: Request, res: Response, next: Function) => {
