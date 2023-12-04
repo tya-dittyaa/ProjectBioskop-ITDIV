@@ -5,14 +5,42 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Link } from 'react-router-dom';
 import NavBar from "../assets/NavBar";
 export default function LoginPage(){
-    const [emailValue,setEmailValue] = useState('');
-    const [passValue,setPassValue] = useState('');
+  const [user,setUser] = useState({
+    email: '',
+    password: ''
+  })
     const [visible,setVisible] = useState(false);
     const h1Ref = useRef<HTMLHeadingElement>(null);
     const pRef = useRef<HTMLParagraphElement>(null);
     const divRef = useRef<HTMLDivElement>(null);
     const leftRef = useRef<HTMLDivElement>(null)
     console.log(window.innerWidth)
+    const login = async () => {
+      try {
+        await fetch(
+          "https://api-bioskop13.dittyaa.my.id/user/login",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+          }
+        );
+
+        alert("login success");
+        
+      } catch (error) {
+        alert(error);
+        console.log(error);
+      }
+    };
+
+    const handleSubmit = () =>{
+      if(user.email!= '' && user.password!= ''){
+        login();
+      }
+    }
     useEffect(() =>{
         setTimeout(() =>{
             if (pRef.current&&h1Ref.current && divRef.current&&leftRef.current){
@@ -31,7 +59,7 @@ export default function LoginPage(){
     },[])
     return (
       <>
-      <NavBar/>
+        <NavBar />
         <div className="loginPage">
           <div className="loginContainer">
             <div ref={leftRef} className="loginContainerLeft">
@@ -40,16 +68,18 @@ export default function LoginPage(){
               <p ref={pRef}>"Tagline"</p>
             </div>
             <div ref={divRef} className="loginContainerRight">
-              <form action="" method="post">
+              <form action="" method="post" >
                 <h1>Login</h1>
                 <div className="emailPart">
                   <input
                     type="text"
                     name="email"
                     id="email"
-                    className={emailValue ? "emailNotEmpty" : ""}
+                    className={user.email ? "emailNotEmpty" : ""}
                     autoComplete="off"
-                    onChange={(e) => setEmailValue(e.target.value)}
+                    onChange={(e) =>
+                      setUser({ ...user, email: e.target.value })
+                    }
                   />
                   <label htmlFor="email">Email</label>
                 </div>
@@ -58,9 +88,11 @@ export default function LoginPage(){
                     type={visible ? "text" : "password"}
                     name="pass"
                     id="pass"
-                    className={passValue ? "passNotEmpty" : ""}
+                    className={user.password ? "passNotEmpty" : ""}
                     autoComplete="off"
-                    onChange={(e) => setPassValue(e.target.value)}
+                    onChange={(e) =>
+                      setUser({ ...user, password: e.target.value })
+                    }
                   />
                   <label htmlFor="pass">Password</label>
                   {visible ? (
@@ -75,10 +107,10 @@ export default function LoginPage(){
                     />
                   )}
                 </div>
-                <button type="submit">Login</button>
+                <button type='submit'>Login</button>
               </form>
               <p>
-                Don&apos;t Have An Account ?{" "}
+                Don&apos;t Have An Account ?
                 <Link to="/register" style={{ color: "black" }}>
                   Register
                 </Link>
