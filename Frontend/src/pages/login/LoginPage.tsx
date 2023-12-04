@@ -36,7 +36,8 @@ export default function LoginPage(){
       }
     };
 
-    const handleSubmit = () =>{
+    const handleSubmit = (e:React.FormEvent<HTMLFormElement>) =>{
+      e.preventDefault();
       if(user.email!= '' && user.password!= ''){
         login();
       }
@@ -68,7 +69,7 @@ export default function LoginPage(){
               <p ref={pRef}>"Tagline"</p>
             </div>
             <div ref={divRef} className="loginContainerRight">
-              <form action="" method="post" >
+              <form action="" method="post" onSubmit={handleSubmit}>
                 <h1>Login</h1>
                 <div className="emailPart">
                   <input
