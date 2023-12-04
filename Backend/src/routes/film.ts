@@ -17,6 +17,7 @@ filmRoute.post("/add", async (req, res) => {
       genre: film.genre,
       description: film.description,
       image_link: film.image_link,
+      rating: film.rating,
       release_date: new Date(film.release_date),
     },
   });
@@ -31,10 +32,20 @@ filmRoute.post("/add", async (req, res) => {
  * * Get all film
  */
 filmRoute.get("/available", async (req, res) => {
-  const now = new Date();
-
   const data = await prisma.film.findMany({
     where: { isAvailable: true },
+  });
+
+  return res.status(200).send(data);
+});
+
+/**
+ * * Get random 3 film
+ */
+filmRoute.get("/top3", async (req, res) => {
+  const data = await prisma.film.findMany({
+    take: 3,
+    orderBy: { release_date: "desc" },
   });
 
   return res.status(200).send(data);

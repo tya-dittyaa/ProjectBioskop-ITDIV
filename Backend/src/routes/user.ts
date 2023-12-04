@@ -6,10 +6,10 @@ export const userRoute = Router();
 const prisma = new PrismaClient();
 
 /**
- * * User Database Create
+ * * User Database Register
  * * <url>/user/create
  */
-userRoute.post("/create", async (req: Request, res: Response) => {
+userRoute.post("/register", async (req: Request, res: Response) => {
   const userInput: User = req.body;
 
   const checkDataExist = await prisma.user.findUnique({
@@ -46,7 +46,7 @@ userRoute.post("/login", async (req: Request, res: Response) => {
 
   if (checkDataExist) {
     return res.status(202).send({
-      message: "Successfull created!",
+      message: "Successfull login!",
       user: {
         id: checkDataExist.id,
         name: checkDataExist.name,

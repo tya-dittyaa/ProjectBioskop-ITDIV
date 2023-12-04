@@ -24,6 +24,6 @@ app.use((req: Request, res: Response, next: Function) => {
 });
 
 // * Listen Port
-app.listen(3000, () =>
-  console.log(`⚡️[server]: Server is running at https://localhost:3000`)
+app.listen(3431, () =>
+  console.log(`⚡️[server]: Server is running at http://localhost:3431`)
 );
