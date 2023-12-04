@@ -35,14 +35,6 @@ const popularMovies = [
   },
 ];
 
-const PopularMoviesCard = ({ image, children }) => {
-  return (
-    <div className="popularMoviesCard">
-      <img src={image} className="popularMoviesPic"></img>
-      <p>{children}</p>
-    </div>
-  );
-};
 const HomePage = () => {
   const [index, setIndex] = useState(0);
 
@@ -70,7 +62,7 @@ const HomePage = () => {
           "Nikmati Film-Film Terbaru<br></br> Bersama
           <span style={{ color: "#ffcd29" }}> NontonYuk!</span>"
         </p>
-        <p style={{ fontSize: "24px", marginTop: "50px" }}>
+        <p style={{ fontSize: "1.8vw", marginTop: "3vw" }}>
           Segera Pesan Tiket untuk Memulai Petualangan Anda
         </p>
         <img className="watchingPic" src={WatchingPic}></img>
@@ -98,9 +90,6 @@ const HomePage = () => {
           src={popularMovies[index].image}
           className="popularMoviesRight"
         ></img>
-        <PopularMoviesCard image={popularMovies[index].image}>
-          {popularMovies[index].name}
-        </PopularMoviesCard>
       </div>
     </>
   );
