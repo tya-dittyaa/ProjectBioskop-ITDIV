@@ -11,11 +11,12 @@ datasource db {
 }
 
 model User {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  email    String   @unique
-  password String
-  name     String
-  role     UserRole @default(CUSTOMER)
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  email       String        @unique
+  password    String
+  name        String
+  role        UserRole      @default(CUSTOMER)
+  Transaction Transaction[]
 }
 
 enum UserRole {
@@ -24,17 +25,71 @@ enum UserRole {
 }
 
 model Film {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
   title        String
   genre        String
   description  String
   image_link   String
   release_date DateTime
-  isAvailable  Boolean  @default(true)
+  isAvailable  Boolean    @default(true)
+  Schedule     Schedule[]
 }
 
 model Theater {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
   name     String
   location String
+  Studio   Studio[]
+}
+
+model Studio {
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  theaterId     String          @db.ObjectId
+  theater       Theater         @relation(fields: [theaterId], references: [id])
+  roomNumber    Int
+  capacity      Int
+  Schedule      Schedule[]
+  PurchasedSeat PurchasedSeat[]
+}
+
+model Schedule {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  filmId   String   @db.ObjectId
+  film     Film     @relation(fields: [filmId], references: [id])
+  studioId String   @db.ObjectId
+  studio   Studio   @relation(fields: [studioId], references: [id])
+  showTime DateTime
+}
+
+model PurchasedSeat {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  studioId          String              @db.ObjectId
+  studio            Studio              @relation(fields: [studioId], references: [id])
+  rowCharacter      String
+  columnNumber      Int
+  TransactionDetail TransactionDetail[]
+}
+
+model Transaction {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String              @db.ObjectId
+  user              User                @relation(fields: [userId], references: [id])
+  paymentMethodId   String              @db.ObjectId
+  paymentMethod     PaymentMethod       @relation(fields: [paymentMethodId], references: [id])
+  date              DateTime            @default(now())
+  TransactionDetail TransactionDetail[]
+}
+
+model TransactionDetail {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  transactionId String        @db.ObjectId
+  transaction   Transaction   @relation(fields: [transactionId], references: [id])
+  seatId        String        @db.ObjectId
+  purchasedSeat PurchasedSeat @relation(fields: [seatId], references: [id])
+}
+
+model PaymentMethod {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  Transaction Transaction[]
 }
