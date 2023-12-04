@@ -116,13 +116,13 @@ const BioskopListPage = () => {
         <div
           className={`bioskopListContainer ${timeVisibility ? "visibles" : ""}`}
         >
-          <p className="cinemaListTitle">
+          <p className="cinemaListTitle" id="timeTitle">
             <span
               style={{ cursor: "pointer" }}
               onClick={() => setTimeVisibility(false)}
             >
-              &larr;{" "}
-            </span>{" "}
+              &larr;
+            </span>
             {cinemaName} (Pick a Time)
           </p>
           <div className="cinemaListScroll">
