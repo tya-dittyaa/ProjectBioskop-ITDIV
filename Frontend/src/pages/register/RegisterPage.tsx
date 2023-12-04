@@ -5,9 +5,11 @@ import './registerPage.css'
 import { Link } from 'react-router-dom';
 import NavBar from "../assets/NavBar";
 export default function RegisterPage(){
-    const [userValue,setUserValue] = useState('');
-    const [emailValue,setEmailValue] = useState('');
-    const [passValue,setPassValue] = useState('');
+    const [user, setUser] = useState({
+      name: '',
+      email: '',
+      password: ''
+    })
     const [confirmPassValue,setConfirmPassValue] = useState('');
     const [visible,setVisible] = useState(false);
     const [visible2,setVisible2] = useState(false);
@@ -22,25 +24,43 @@ export default function RegisterPage(){
     const leftRef = useRef<HTMLDivElement>(null)
     const checkUser = () => {
         
-            setUserError(!userValue);
+            setUserError(!user.name);
         
     }
     const checkEmail = () =>{
-        
-            setEmailError(!(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(emailValue)));
+            setEmailError(!(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(user.email)));
         
         
     }
     const checkPass = () => {
         
-            setPassError((passValue.length<8))
+            setPassError((user.password.length<8))
         
     }
     const checkConfirm = () => {
         
-            setConfirmPassError(!(passValue === confirmPassValue))
+            setConfirmPassError(!(user.password === confirmPassValue))
         
     }
+
+    const register = async () => {
+      try {
+        const response = await fetch(
+          "https://api-bioskop13.dittyaa.my.id/user/register", 
+          {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
+        alert("Register success");
+      } catch (error) {
+        alert(error);
+        console.log(error);
+      }
+    }
+
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault();
         setIsSubmit(true);
@@ -48,6 +68,9 @@ export default function RegisterPage(){
         checkEmail();
         checkPass();
         checkConfirm();
+        if(user.name!='' && user.password!='' && user.email!=''){
+          register();
+        }
     }
     useEffect(() =>{
         setTimeout(() =>{
@@ -67,7 +90,7 @@ export default function RegisterPage(){
     },[])
     return (
       <>
-      <NavBar/>
+        <NavBar />
         <div className="registerPage">
           <div className="registerContainer">
             <div ref={divRef} className="registerContainerRight">
@@ -79,8 +102,8 @@ export default function RegisterPage(){
                     name="user"
                     id="user"
                     autoComplete="off"
-                    className={userValue ? "userNotEmpty" : ""}
-                    onChange={(e) => setUserValue(e.target.value)}
+                    className={user.name ? "userNotEmpty" : ""}
+                    onChange={(e) => setUser({ ...user, name: e.target.value })}
                     onKeyUp={checkUser}
                   />
                   <label htmlFor="user">Username</label>
@@ -91,9 +114,11 @@ export default function RegisterPage(){
                     type="text"
                     name="email"
                     id="email"
-                    className={emailValue ? "emailNotEmpty" : ""}
+                    className={user.email ? "emailNotEmpty" : ""}
                     autoComplete="off"
-                    onChange={(e) => setEmailValue(e.target.value)}
+                    onChange={(e) =>
+                      setUser({ ...user, email: e.target.value })
+                    }
                     onKeyUp={checkEmail}
                   />
                   <label htmlFor="email">Email</label>
@@ -104,9 +129,11 @@ export default function RegisterPage(){
                     type={visible ? "text" : "password"}
                     name="pass"
                     id="pass"
-                    className={passValue ? "passNotEmpty" : ""}
+                    className={user.password ? "passNotEmpty" : ""}
                     autoComplete="off"
-                    onChange={(e) => setPassValue(e.target.value)}
+                    onChange={(e) =>
+                      setUser({ ...user, password: e.target.value })
+                    }
                     onKeyUp={checkPass}
                   />
                   <label htmlFor="pass">Password</label>
@@ -154,7 +181,7 @@ export default function RegisterPage(){
                 <button type="submit">Register</button>
               </form>
               <p>
-                Already Have An Account ?{" "}
+                Already Have An Account ?
                 <Link to="/login" style={{ color: "black" }}>
                   Login
                 </Link>
