@@ -76,7 +76,7 @@ export default function LoginPage(){
         <div className="loginPage">
           <div className="loginContainer">
             <div ref={leftRef} className="loginContainerLeft">
-              <h1 ref={h1Ref}>"Nama Web"</h1>
+              <h1 ref={h1Ref}>NontonYuk</h1>
               <br />
               <p ref={pRef}>"Tagline"</p>
             </div>

@@ -197,7 +197,7 @@ export default function RegisterPage(){
               </p>
             </div>
             <div ref={leftRef} className="registerContainerLeft">
-              <h1 ref={h1Ref}>"Nama Web"</h1>
+              <h1 ref={h1Ref}>NontonYuk</h1>
               <br />
               <p ref={pRef}>"Tagline"</p>
             </div>
