@@ -452,6 +452,12 @@ a{
   color: white;
 }
 
+.rightNavBar{
+  width: 20vw;
+  display: flex;
+  justify-content: space-around;
+}
+
 .visible{
   visibility: visible;
 }
@@ -461,6 +467,9 @@ a{
   flex-direction: column;
 }
 
+.unVisible{
+  visibility: hidden;
+}
 
 
 @media(max-width: 1265px) {

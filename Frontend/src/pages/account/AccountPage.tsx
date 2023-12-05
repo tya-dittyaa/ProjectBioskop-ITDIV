@@ -1,8 +1,14 @@
 import { useState } from 'react'
 import './accountPage.css'
 import NavBar from '../assets/NavBar';
+import { useNavigate } from 'react-router-dom';
 export default function AccountPage(){
     const [popup,setPopUp] = useState(false);
+    const navigate = useNavigate()
+    const handleLogout = () =>{
+        window.localStorage.setItem('isLoggedIn',"")
+        navigate('/')
+    }
     return(
         <>
         <NavBar/>
@@ -13,6 +19,7 @@ export default function AccountPage(){
                     <span className='username'>Jefry </span>
                     <br />
                     <span>Jefry@gmail.com</span>
+                    <button onClick={handleLogout}>Logout</button>
                 </div>
                 <div className="purchaseHistory">
                     <h1 className='purchasettl'>Purchase History</h1>

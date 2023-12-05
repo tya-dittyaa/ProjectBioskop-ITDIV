@@ -2,13 +2,15 @@ import { useState,useRef, useEffect } from 'react'
 import './loginPage.css'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import NavBar from "../assets/NavBar";
 export default function LoginPage(){
   const [user,setUser] = useState({
     email: '',
     password: ''
   })
+
+  const navigate = useNavigate();
     const [visible,setVisible] = useState(false);
     const h1Ref = useRef<HTMLHeadingElement>(null);
     const pRef = useRef<HTMLParagraphElement>(null);
@@ -17,7 +19,7 @@ export default function LoginPage(){
     console.log(window.innerWidth)
     const login = async () => {
       try {
-        await fetch(
+        const response = await fetch(
           "https://api-bioskop13.dittyaa.my.id/user/login",
           {
             method: "POST",
@@ -26,10 +28,16 @@ export default function LoginPage(){
             },
             body: JSON.stringify(user),
           }
-        );
+        )
 
-        alert("login success");
-        
+        if(response.status === 202) {
+          alert("login success");
+          window.localStorage.setItem("isLoggedIn", "true");
+          navigate('/')
+        }else if(response.status === 404){
+          alert(user.email + " " +user.password)
+          alert("Invalid email/password")
+        }
       } catch (error) {
         alert(error);
         console.log(error);
