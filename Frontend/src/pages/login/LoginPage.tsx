@@ -4,13 +4,20 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../assets/NavBar";
-import { useUserContext } from "../../contexts/UserContext";
+// import { useUserContext } from "../../contexts/UserContext";
 export default function LoginPage() {
-  const { setUserLog } = useUserContext();
+  // const { userLog,setUserLog } = useUserContext();
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+
+  let userLog = {
+    id: "",
+    email: "",
+    password: "",
+    name: ""
+  };
 
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
@@ -19,6 +26,7 @@ export default function LoginPage() {
   const divRef = useRef<HTMLDivElement>(null);
   const leftRef = useRef<HTMLDivElement>(null);
   console.log(window.innerWidth);
+  
   const login = async () => {
     try {
       const response = await fetch(
@@ -38,13 +46,19 @@ export default function LoginPage() {
         window.localStorage.setItem("isLoggedIn", "true");
         const data = await response.json();
         const user = data.user;
-        console.log(user);
-        setUserLog({
-          id: user.id,
-          email: user.email,
-          password: user.password,
-          name: user.name,
-        });
+        // console.log(user);
+        // setUserLog({
+          // id: user.id,
+          // email: user.email,
+          // password: user.password,
+          // name: user.name,
+        // });
+        userLog.id  = user.id;
+        userLog.email = user.email;
+        userLog.password = user.password;
+        userLog.name = user.name;
+        window.localStorage.setItem("userLog", JSON.stringify(userLog))
+
         navigate("/");
       } else if (response.status === 404) {
         alert(user.email + " " + user.password);

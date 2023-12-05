@@ -2,9 +2,10 @@ import { useState } from 'react'
 import './accountPage.css'
 import NavBar from '../assets/NavBar';
 import { useNavigate } from 'react-router-dom';
-import { useUserContext } from "../../contexts/UserContext";
+// import { useUserContext } from '../../contexts/UserContext';
 export default function AccountPage(){
-    const { userLog } = useUserContext();
+    // const {userLog} = useUserContext();
+    const userLog = JSON.parse(localStorage.getItem("userLog"));
     const [popup,setPopUp] = useState(false);
     const navigate = useNavigate()
     const handleLogout = () =>{
