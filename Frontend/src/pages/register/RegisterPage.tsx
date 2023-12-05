@@ -2,7 +2,7 @@ import { useState,useRef,useEffect } from "react";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import './registerPage.css'
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import NavBar from "../assets/NavBar";
 export default function RegisterPage(){
     const [user, setUser] = useState({
@@ -10,6 +10,7 @@ export default function RegisterPage(){
       email: '',
       password: ''
     })
+    const navigate = useNavigate();
     const [confirmPassValue,setConfirmPassValue] = useState('');
     const [visible,setVisible] = useState(false);
     const [visible2,setVisible2] = useState(false);
@@ -54,7 +55,13 @@ export default function RegisterPage(){
           },
           body: JSON.stringify(user),
         });
-        alert("Register success");
+
+        if(response.status === 201){
+          alert("Register success");
+          navigate('/login');
+        }else if(response.status === 409){
+          alert("Email has already exist!");
+        }
       } catch (error) {
         alert(error);
         console.log(error);
