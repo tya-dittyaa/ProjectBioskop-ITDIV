@@ -99,7 +99,9 @@ export default function LoginPage() {
           <div ref={leftRef} className="loginContainerLeft">
             <h1 ref={h1Ref}>NontonYuk</h1>
             <br />
-            <p ref={pRef}>"Tagline"</p>
+            <p ref={pRef}>
+              "Segera Pesan Tiket untuk <br></br>Memulai Petualangan Anda"
+            </p>
           </div>
           <div ref={divRef} className="loginContainerRight">
             <form action="" method="post" onSubmit={handleSubmit}>
