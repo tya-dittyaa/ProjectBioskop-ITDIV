@@ -68,7 +68,7 @@ const HomePage = () => {
           Daftar Sekarang
         </Link>
       </div>
-      <p className="popularTitle">Popular Movies</p>
+      <p className="popularTitle">Recommend Movies</p>
       <div className="popularMoviesContainer">
         {recommendMovies.length > 0 ? (
           <>
