@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "./assets/NavBar";
 import WatchingPic from "./assets/Watching.png";
 import avengerPic from "./assets/avenger.jpeg";
@@ -35,7 +35,17 @@ const popularMovies = [
   },
 ];
 
+
+
 const HomePage = () => {
+  useEffect(() => {
+    fetch("https://api-bioskop13.dittyaa.my.id/film/top3")
+    .then(res => {return res.json()})
+    .then(data =>{
+      console.log(data)
+    })
+}, []);
+
   const [index, setIndex] = useState(0);
   const loggedIn = window.localStorage.getItem('isLoggedIn')
   const handlePrevIndex = () => {

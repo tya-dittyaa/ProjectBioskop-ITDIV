@@ -156,7 +156,7 @@ const BioskopListPage = () => {
                 status={seat.status}
               >
                 {seat.seatName}
-              </SeatDesign>
+              </SeatDesign> 
             ))}
           </div>
           <Link to="/payment">
