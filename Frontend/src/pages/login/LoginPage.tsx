@@ -25,15 +25,17 @@ export default function LoginPage(){
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: "Bearer fredjefdrewkardit"
             },
             body: JSON.stringify(user),
           }
-        )
+        );
 
         if(response.status === 202) {
           alert("login success");
           window.localStorage.setItem("isLoggedIn", "true");
           const data = await response.json();
+          console.log(data);
           const user = data.user;
           navigate('/')
         }else if(response.status === 404){
