@@ -9,7 +9,7 @@ import MovieListPage from "./pages/movieList/MovieList.tsx";
 import RegisterPage from "./pages/register/RegisterPage.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import { UserProvider } from "./contexts/UserContext.tsx";
 const router = createBrowserRouter([
   { path: "/", element: <HomePage /> },
   { path: "/payment", element: <PaymentPage /> },
@@ -17,11 +17,13 @@ const router = createBrowserRouter([
   { path: "/account", element: <AccountPage /> },
   { path: "/login", element: <LoginPage /> },
   { path: "/movie", element: <MovieListPage /> },
-  { path: "/register", element: <RegisterPage /> }
+  { path: "/register", element: <RegisterPage /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </React.StrictMode>
 );

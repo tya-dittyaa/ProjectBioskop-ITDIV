@@ -2,7 +2,9 @@ import { useState } from 'react'
 import './accountPage.css'
 import NavBar from '../assets/NavBar';
 import { useNavigate } from 'react-router-dom';
+import { useUserContext } from "../../contexts/UserContext";
 export default function AccountPage(){
+    const { userLog } = useUserContext();
     const [popup,setPopUp] = useState(false);
     const navigate = useNavigate()
     const handleLogout = () =>{
@@ -16,9 +18,9 @@ export default function AccountPage(){
                 <div className="profilePart">
                     <h1>My Profile</h1>
                     <img src="profile.jpg" alt="" />
-                    <span className='username'>Jefry </span>
+                    <span className='username'>{userLog.name} </span>
                     <br />
-                    <span>Jefry@gmail.com</span>
+                    <span>{userLog.email}</span>
                     <button onClick={handleLogout}>Logout</button>
                 </div>
                 <div className="purchaseHistory">
