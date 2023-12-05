@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import NavBar from "./assets/NavBar";
 import avengerPic from "./assets/avenger.jpeg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const seatList = [
   {
@@ -85,11 +85,7 @@ const BioskopListPage = () => {
   const [seatVisibility, setSeatVisibility] = useState(false);
   const [cinemaName, setCinemaName] = useState("");
   const [time, setTime] = useState("");
-  const [seats, setSeats] = useState([
-    {
-      
-    }
-  ]);
+  const [seats, setSeats] = useState([{}]);
   const handleClickCinema = (cinema) => {
     setTimeVisibility(true);
     setCinemaName(cinema);
@@ -106,13 +102,68 @@ const BioskopListPage = () => {
       setSeats((prevSeats) => [...prevSeats, seatname]);
     }
   };
+  const { id } = useParams();
+  const [movies, setMovies] = useState([]);
+  useEffect(() => {
+    const getMovie = async () => {
+      try {
+        const response = await fetch(
+          "https://api-bioskop13.dittyaa.my.id/film/available",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer fredjefdrewkardit",
+            },
+          }
+        );
+        const data = await response.json();
+        setMovies(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getMovie();
+  }, []);
+
   return (
     <>
       <NavBar />
       <div className="bioskopContainer">
         <div className="movieContainer">
           <p className="divTitle">Movie Detail</p>
-          <div className="summaryHeader" id="bioskopMovies">
+          {movies.map((movie) => {
+            if (movie.id === id) {
+              return (
+                <div
+                  className="summaryHeader"
+                  id="bioskopMovies"
+                  key={movie.id}
+                >
+                  <img src={movie.image_link} className="summaryPic"></img>
+                  <div className="summaryHeaderRight" id="bioskopMovie">
+                    <p className="boldSpan">Movie Name:</p>
+                    <p style={{ fontSize: "20px" }}>{movie.title}</p>
+                    <p>
+                      <span className="boldSpan">Rating:</span>{" "}
+                      {movie.filmRating}
+                    </p>
+                  </div>
+                </div>
+              );
+            }
+          })}
+          {movies.map((movie) => {
+            if (movie.id === id) {
+              return (
+                <div className="summaryTicket" key={movie.id}>
+                  <span className="boldSpan">Synopsis:</span>
+                  <p>{movie.description}</p>
+                </div>
+              );
+            }
+          })}
+          {/* <div className="summaryHeader" id="bioskopMovies">
             <img src={avengerPic} className="summaryPic"></img>
             <div className="summaryHeaderRight" id="bioskopMovie">
               <p className="boldSpan">Movie Name:</p>
@@ -121,8 +172,8 @@ const BioskopListPage = () => {
                 <span className="boldSpan">Rating:</span> 9.5
               </p>
             </div>
-          </div>
-          <div className="summaryTicket">
+          </div> */}
+          {/* <div className="summaryTicket">
             <span className="boldSpan">Synopsis:</span>
             <p>
               After the devastating events of Avengers: Infinity War (2018), the
@@ -132,7 +183,7 @@ const BioskopListPage = () => {
               universe, no matter what consequences may be in store, and no
               matter who they face...
             </p>
-          </div>
+          </div> */}
         </div>
         <div
           className={`bioskopListContainer ${timeVisibility ? "" : "visibles"}`}
