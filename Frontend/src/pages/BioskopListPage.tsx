@@ -64,6 +64,7 @@ const BioskopListPage = () => {
 
   useEffect(() => {
     //kosongin takenSeat
+    // setTakenSeat([]);
     //fetch masukkin ke takenSeat
     seatList.map((seat, idx) => {
       for (let i = 0; i < takenSeat.length; i++) {
@@ -84,7 +85,11 @@ const BioskopListPage = () => {
   const [seatVisibility, setSeatVisibility] = useState(false);
   const [cinemaName, setCinemaName] = useState("");
   const [time, setTime] = useState("");
-  const [seats, setSeats] = useState([""]);
+  const [seats, setSeats] = useState([
+    {
+      
+    }
+  ]);
   const handleClickCinema = (cinema) => {
     setTimeVisibility(true);
     setCinemaName(cinema);
