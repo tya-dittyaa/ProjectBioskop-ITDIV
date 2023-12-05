@@ -6,8 +6,10 @@ import helmet from "helmet";
 import { errorHandler } from "./middlewares/error.middleware";
 import { filmRoute } from "./routes/film.routes";
 import { scheduleRoute } from "./routes/schedule.routes";
+import { seatRoute } from "./routes/seat.routes";
 import { studioRoute } from "./routes/studio.routes";
 import { theaterRoute } from "./routes/theater.routes";
+import { transactionRoute } from "./routes/transaction.routes";
 import { userRoute } from "./routes/user.routes";
 
 const app = express();
@@ -27,12 +29,14 @@ app.use(bodyParser.json({ limit: "50mb", type: "application/json" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 // * Routes
-app.use(errorHandler);
 app.use("/film", filmRoute);
 app.use("/schedule", scheduleRoute);
+app.use("/seat", seatRoute);
 app.use("/studio", studioRoute);
 app.use("/theater", theaterRoute);
+app.use("/transaction", transactionRoute);
 app.use("/user", userRoute);
+app.use(errorHandler);
 
 // ! Error 404 Handler
 app.get("*", (req: Request, res: Response) => {
