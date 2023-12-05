@@ -199,7 +199,9 @@ export default function RegisterPage(){
             <div ref={leftRef} className="registerContainerLeft">
               <h1 ref={h1Ref}>NontonYuk</h1>
               <br />
-              <p ref={pRef}>"Tagline"</p>
+              <p ref={pRef}>
+                "Segera Pesan Tiket untuk <br></br>Memulai Petualangan Anda"
+              </p>
             </div>
           </div>
         </div>
