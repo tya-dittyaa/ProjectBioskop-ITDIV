@@ -1,15 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavBar from "./assets/NavBar";
 import avengerPic from "./assets/avenger.jpeg";
 import { Link, useNavigate } from "react-router-dom";
 
 const seatList = [
-  { seatName: "1A", status: "taken" },
-  { seatName: "2A", status: "available" },
-  { seatName: "3A", status: "available" },
-  { seatName: "4A", status: "available" },
-  { seatName: "5A", status: "available" },
-  { seatName: "6A", status: "available" },
+  {
+    rowCharacter: "A",
+    columnNumber: 1,
+    status: "available",
+  },
+  {
+    rowCharacter: "A",
+    columnNumber: 2,
+    status: "available",
+  },
+  {
+    rowCharacter: "A",
+    columnNumber: 3,
+    status: "available",
+  },
+  {
+    rowCharacter: "A",
+    columnNumber: 4,
+    status: "available",
+  },
+  {
+    rowCharacter: "A",
+    columnNumber: 5,
+    status: "available",
+  },
+  {
+    rowCharacter: "A",
+    columnNumber: 6,
+    status: "available",
+  },
 ];
 
 const SeatDesign = ({ children, status, handleclick, id }) => {
@@ -30,6 +54,31 @@ const CinemaLists = ({ children, handleclick }) => {
   );
 };
 const BioskopListPage = () => {
+  const [takenSeat, setTakenSeat] = useState([
+    {
+      id: 1,
+      rowCharacter: "A",
+      columnNumber: 1,
+    },
+  ]);
+
+  useEffect(() => {
+    //kosongin takenSeat
+    //fetch masukkin ke takenSeat
+    seatList.map((seat, idx) => {
+      for (let i = 0; i < takenSeat.length; i++) {
+        let taken = takenSeat[i];
+        if (
+          seat.columnNumber === taken.columnNumber &&
+          seat.rowCharacter === taken.rowCharacter
+        ) {
+          seatList[idx].status = "taken";
+          break;
+        }
+      }
+    });
+  }, []);
+
   const navigate = useNavigate();
   const [timeVisibility, setTimeVisibility] = useState(false);
   const [seatVisibility, setSeatVisibility] = useState(false);
@@ -155,8 +204,8 @@ const BioskopListPage = () => {
                 handleclick={handleClickSeat}
                 status={seat.status}
               >
-                {seat.seatName}
-              </SeatDesign> 
+                {seat.rowCharacter + seat.columnNumber}
+              </SeatDesign>
             ))}
           </div>
           <Link to="/payment">
