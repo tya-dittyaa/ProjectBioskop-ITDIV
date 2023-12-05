@@ -28,7 +28,10 @@ model Film {
   id           String     @id @default(auto()) @map("_id") @db.ObjectId
   title        String
   genre        String
-  rating       Float
+  duration     Int
+  director     String
+  ageRating    String
+  filmRating   Float
   description  String
   image_link   String
   release_date DateTime
@@ -44,28 +47,28 @@ model Theater {
 }
 
 model Studio {
-  id            String          @id @default(auto()) @map("_id") @db.ObjectId
-  theaterId     String          @db.ObjectId
-  theater       Theater         @relation(fields: [theaterId], references: [id])
-  roomNumber    Int
-  capacity      Int
-  Schedule      Schedule[]
-  PurchasedSeat PurchasedSeat[]
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  theaterId  String     @db.ObjectId
+  theater    Theater    @relation(fields: [theaterId], references: [id])
+  roomNumber Int
+  capacity   Int
+  Schedule   Schedule[]
 }
 
 model Schedule {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  filmId   String   @db.ObjectId
-  film     Film     @relation(fields: [filmId], references: [id])
-  studioId String   @db.ObjectId
-  studio   Studio   @relation(fields: [studioId], references: [id])
-  showTime DateTime
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  filmId        String          @db.ObjectId
+  film          Film            @relation(fields: [filmId], references: [id])
+  studioId      String          @db.ObjectId
+  studio        Studio          @relation(fields: [studioId], references: [id])
+  showTime      DateTime
+  PurchasedSeat PurchasedSeat[]
 }
 
 model PurchasedSeat {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  studioId          String              @db.ObjectId
-  studio            Studio              @relation(fields: [studioId], references: [id])
+  scheduleId        String              @db.ObjectId
+  schedule          Schedule            @relation(fields: [scheduleId], references: [id])
   rowCharacter      String
   columnNumber      Int
   TransactionDetail TransactionDetail[]
