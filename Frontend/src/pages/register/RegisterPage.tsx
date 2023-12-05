@@ -47,14 +47,16 @@ export default function RegisterPage(){
     const register = async () => {
       try {
         const response = await fetch(
-          "https://api-bioskop13.dittyaa.my.id/user/register", 
+          "https://api-bioskop13.dittyaa.my.id/user/register",
           {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(user),
-        });
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer fredjefdrewkardit",
+            },
+            body: JSON.stringify(user),
+          }
+        );
 
         if(response.status === 201){
           alert("Register success");
