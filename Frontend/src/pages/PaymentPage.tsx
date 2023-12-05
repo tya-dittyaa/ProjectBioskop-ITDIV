@@ -7,7 +7,6 @@ import avengerPic from "./assets/avenger.jpeg";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const PaymentMethod = ({ image, children, setPayment }) => {
-  // const [paymentBorder, setpaymentBorder] = useState("");
   return (
     <div className={`paymentMethodDiv`}>
       <img src={image} width={"80px"} height={"24px"}></img>
@@ -17,7 +16,6 @@ const PaymentMethod = ({ image, children, setPayment }) => {
         type="radio"
         name="paymentMethodRadio"
         onClick={() => setPayment(children)}
-        // onFocus={() => setpaymentBorder("activePayment")}
       ></input>
     </div>
   );
@@ -28,10 +26,15 @@ const PaymentPage = () => {
   const navigate = useNavigate();
 
   const handlePayment = () => {
+    const loggedIn = window.localStorage.getItem('isLoggedIn')
     if (payment === "") {
       setModalVisibility("visible");
     } else {
-      navigate("/");
+      if(loggedIn==='true'){
+        navigate("/account");
+      }else{
+        navigate('/login');
+      }
     }
   };
   return (

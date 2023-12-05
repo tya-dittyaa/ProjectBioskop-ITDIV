@@ -37,7 +37,7 @@ const popularMovies = [
 
 const HomePage = () => {
   const [index, setIndex] = useState(0);
-
+  const loggedIn = window.localStorage.getItem('isLoggedIn')
   const handlePrevIndex = () => {
     if (index === 0) {
       setIndex(popularMovies.length - 1);
@@ -68,7 +68,7 @@ const HomePage = () => {
         <img className="watchingPic" src={WatchingPic}></img>
       </div>
 
-      <div className="centerDiv">
+      <div className={`centerDiv ${loggedIn === 'true'? "unVisible" : "visible"}`}>
         <Link to={"/register"} className="daftarButton">
           Daftar Sekarang
         </Link>

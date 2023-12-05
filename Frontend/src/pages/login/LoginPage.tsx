@@ -1,4 +1,4 @@
-import { useState,useRef, useEffect } from 'react'
+import { useState,useRef, useEffect, createContext } from 'react'
 import './loginPage.css'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -33,6 +33,8 @@ export default function LoginPage(){
         if(response.status === 202) {
           alert("login success");
           window.localStorage.setItem("isLoggedIn", "true");
+          const data = await response.json();
+          const user = data.user;
           navigate('/')
         }else if(response.status === 404){
           alert(user.email + " " +user.password)
