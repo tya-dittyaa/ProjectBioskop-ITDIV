@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import NavBar from "./assets/NavBar";
-import avengerPic from "./assets/avenger.jpeg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 const seatList = [
@@ -34,6 +33,36 @@ const seatList = [
     columnNumber: 6,
     status: "available",
   },
+  {
+    rowCharacter: "B",
+    columnNumber: 1,
+    status: "available",
+  },
+  {
+    rowCharacter: "B",
+    columnNumber: 2,
+    status: "available",
+  },
+  {
+    rowCharacter: "B",
+    columnNumber: 3,
+    status: "available",
+  },
+  {
+    rowCharacter: "B",
+    columnNumber: 4,
+    status: "available",
+  },
+  {
+    rowCharacter: "B",
+    columnNumber: 5,
+    status: "available",
+  },
+  {
+    rowCharacter: "B",
+    columnNumber: 6,
+    status: "available",
+  },
 ];
 
 const SeatDesign = ({ children, status, handleclick, id }) => {
@@ -46,7 +75,15 @@ const SeatDesign = ({ children, status, handleclick, id }) => {
     </div>
   );
 };
-const CinemaLists = ({ children, handleclick }) => {
+const CinemaLists = ({ children, handleclick, bioskop }) => {
+  return (
+    <div onClick={() => handleclick(bioskop)} className="cinemaLists">
+      {children}
+    </div>
+  );
+};
+
+const TimeLists = ({ children, handleclick }) => {
   return (
     <div onClick={() => handleclick(children)} className="cinemaLists">
       {children}
@@ -83,12 +120,36 @@ const BioskopListPage = () => {
   const navigate = useNavigate();
   const [timeVisibility, setTimeVisibility] = useState(false);
   const [seatVisibility, setSeatVisibility] = useState(false);
-  const [cinemaName, setCinemaName] = useState("");
+  const [cinemaData, setCinemaData] = useState({});
+  const [cinemaList, setCinemaList] = useState([]);
+  const [timeList, setTimeList] = useState([]);
   const [time, setTime] = useState("");
   const [seats, setSeats] = useState([{}]);
   const handleClickCinema = (cinema) => {
     setTimeVisibility(true);
-    setCinemaName(cinema);
+    setCinemaData(cinema);
+
+    const getTime = async () => {
+      try {
+        const response = await fetch(
+          "https://api-bioskop13.dittyaa.my.id/schedule/available",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer fredjefdrewkardit",
+            },
+            body: JSON.stringify({ filmId: id, theaterId: cinema.theaterId }),
+          }
+        );
+        const data = await response.json();
+        setTimeList(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getTime();
   };
 
   const handleClickTime = (time) => {
@@ -123,7 +184,29 @@ const BioskopListPage = () => {
         console.log(error);
       }
     };
+
+    const getCinema = async () => {
+      try {
+        const response = await fetch(
+          "https://api-bioskop13.dittyaa.my.id/theater/available",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer fredjefdrewkardit",
+            },
+            body: JSON.stringify({ filmId: id }),
+          }
+        );
+        const data = await response.json();
+        setCinemaList(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     getMovie();
+    getCinema();
   }, []);
 
   return (
@@ -190,31 +273,15 @@ const BioskopListPage = () => {
         >
           <p className="cinemaListTitle">Cinema List</p>
           <div className="cinemaListScroll">
-            <CinemaLists handleclick={handleClickCinema}>
-              Central Park XXI
-            </CinemaLists>
-            <CinemaLists handleclick={handleClickCinema}>Ayani XXI</CinemaLists>
-            <CinemaLists handleclick={handleClickCinema}>
-              Taman Anggrek XXI
-            </CinemaLists>
-            <CinemaLists handleclick={handleClickCinema}>
-              Central Park XXI
-            </CinemaLists>
-            <CinemaLists handleclick={handleClickCinema}>
-              Central Park XXI
-            </CinemaLists>
-            <CinemaLists handleclick={handleClickCinema}>
-              Central Park XXI
-            </CinemaLists>
-            <CinemaLists handleclick={handleClickCinema}>
-              Central Park XXI
-            </CinemaLists>
-            <CinemaLists handleclick={handleClickCinema}>
-              Central Park XXI
-            </CinemaLists>
-            <CinemaLists handleclick={handleClickCinema}>
-              Central Park XXI
-            </CinemaLists>
+            {cinemaList.map((cinema, idx) => (
+              <CinemaLists
+                key={idx}
+                bioskop={cinema}
+                handleclick={handleClickCinema}
+              >
+                {cinema.name}
+              </CinemaLists>
+            ))}
           </div>
         </div>
 
@@ -228,13 +295,14 @@ const BioskopListPage = () => {
             >
               &larr;
             </span>
-            {cinemaName} (Pick a Time)
+            {cinemaData.name} (Pick a Time)
           </p>
           <div className="cinemaListScroll">
-            <CinemaLists handleclick={handleClickTime}>13:00</CinemaLists>
-            <CinemaLists handleclick={handleClickTime}>14:00</CinemaLists>
-            <CinemaLists handleclick={handleClickTime}>15:00</CinemaLists>
-            <CinemaLists handleclick={handleClickTime}>16:00</CinemaLists>
+            {timeList.map((time, idx) => (
+              <TimeLists key={idx} handleclick={handleClickTime}>
+                {time.showTime}
+              </TimeLists>
+            ))}
           </div>
         </div>
       </div>
