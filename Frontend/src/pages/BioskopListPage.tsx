@@ -93,7 +93,7 @@ const TimeLists = ({ children, handleclick, schedule }) => {
 const BioskopListPage = () => {
   // const [purchasedSeat, setPurchasedSeat] = useState([]);
   let purchasedSeat = [{}];
-
+  const [loading,setLoading] = useState(true);
   const navigate = useNavigate();
   const [timeVisibility, setTimeVisibility] = useState(false);
   const [seatVisibility, setSeatVisibility] = useState(false);
@@ -158,7 +158,6 @@ const BioskopListPage = () => {
 
     getTaken().then(()=>{
       // cek taken seat
-      // console.log("length" + purchasedSeat.length)
       seatList.map((seat, idx) => {
         for (let i = 0; i < purchasedSeat.length; i++) {
           let taken = purchasedSeat[i];
@@ -167,12 +166,11 @@ const BioskopListPage = () => {
             seat.rowCharacter === taken.rowCharacter
           ) {
             seatList[idx].status = "taken";
-             console.log(seatList)
             break;
           }
         }
       });
-
+      setLoading(false)
     })
   };
 
@@ -249,6 +247,7 @@ const BioskopListPage = () => {
   const handleBack = () => {
     setSeatVisibility(false);
     setSeats([]);
+    setLoading(true);
     seatList.forEach((s) => {
       s.status = "available";
     });
@@ -351,7 +350,9 @@ const BioskopListPage = () => {
           </p>
           <div className="screenDiv">screen</div>
           <div className="seatDiv">
-            {seatList.map((seat, idx) => (
+            {loading? (<p>Loading...</p>):(
+
+            seatList.map((seat, idx) => (
               <SeatDesign
                 key={idx}
                 id={idx}
@@ -362,6 +363,7 @@ const BioskopListPage = () => {
                 {console.log(seat.status)}
                 {seat.rowCharacter + seat.columnNumber}
               </SeatDesign>
+            )
             ))}
           </div>
           <Link to="/payment">
