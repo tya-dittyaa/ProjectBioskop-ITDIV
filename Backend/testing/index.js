@@ -1,10 +1,9 @@
 async function checkAPI() {
   // const url = "https://api-bioskop13.dittyaa.my.id/schedule/available";
-  const url = "http://localhost:3431/film/available";
+  const url = "http://localhost:3431/seat/purchased";
 
   const params = {
-    filmId: "656ec3601deb898295ca71bc",
-    theaterId: "656ed96094aaeb7c79256c44",
+    scheduleId: "656eede15bbb627f23951da7",
   };
 
   const options = {

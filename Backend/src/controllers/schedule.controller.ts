@@ -29,13 +29,15 @@ export class ScheduleController {
     });
   }
 
-  // Available
+  // * Available
   static async available(req: Request, res: Response) {
     const { filmId, theaterId } = req.body;
 
-    // * Get midnight date
-    const midnight = new Date();
-    midnight.setHours(0, 0, 0, 0);
+    // * Get next midnight date
+    const currentDate = new Date("2023-12-06T00:00:00.000Z");
+    const nextMidnight = new Date("2023-12-06T00:00:00.000Z");
+    nextMidnight.setDate(nextMidnight.getDate() + 1);
+    nextMidnight.setUTCHours(0, 0, 0, 0);
 
     // ! Req Body is Missing
     if (!filmId || !theaterId) {
@@ -47,14 +49,14 @@ export class ScheduleController {
       where: {
         filmId,
         studio: { theaterId },
-        showTime: { gte: new Date() },
+        showTime: { gte: currentDate, lte: nextMidnight },
       },
       orderBy: { showTime: "asc" },
     });
 
     // * No data
     if (scheduleData.length <= 0) {
-      return res.status(404).json({ message: "Schedule not found" });
+      return res.status(404).json({ message: "Schedule not found", data: [] });
     }
 
     let arrayOfObjects = [];
@@ -76,6 +78,8 @@ export class ScheduleController {
       arrayOfObjects.push(newObj);
     }
 
-    return res.status(200).json(arrayOfObjects);
+    return res
+      .status(200)
+      .json({ message: "Schedule was found", data: arrayOfObjects });
   }
 }

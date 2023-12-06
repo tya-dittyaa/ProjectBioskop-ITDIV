@@ -28,13 +28,18 @@ export class TheaterController {
     });
   }
 
-  // Available
+  // * Available
   static async available(req: Request, res: Response) {
     const { filmId } = req.body;
 
-    // * Get midnight date
-    const midnight = new Date();
-    midnight.setHours(0, 0, 0, 0);
+    // * This Past Midnight Date
+    const pastMidnight = new Date("2023-12-06T00:00:00.000Z");
+    pastMidnight.setUTCHours(0, 0, 0, 0);
+
+    // * Get next midnight date
+    const nextMidnight = new Date("2023-12-06T00:00:00.000Z");
+    nextMidnight.setDate(nextMidnight.getDate() + 1);
+    nextMidnight.setUTCHours(0, 0, 0, 0);
 
     // ! Req Body is Missing
     if (!filmId) {
@@ -45,7 +50,7 @@ export class TheaterController {
       select: {
         studio: { select: { theater: { select: { id: true, name: true } } } },
       },
-      where: { filmId, showTime: { gte: new Date() } },
+      where: { filmId, showTime: { gte: pastMidnight, lte: nextMidnight } },
       orderBy: { studio: { theater: { name: "asc" } } },
     });
 
