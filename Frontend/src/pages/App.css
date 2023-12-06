@@ -90,7 +90,7 @@ a {
 }
 
 .leftNavbar {
-  width: 400px;
+  width: 200px;
   display: flex;
   justify-content: space-around;
 }
@@ -262,7 +262,7 @@ a {
 .popularTitle {
   font-size: 30px;
   font-weight: 500;
-  margin-top: 8vw;
+  margin-top: 20px;
   margin-left: 7vw;
   margin-bottom: 2vw;
 }
@@ -370,6 +370,15 @@ a {
   display: none;
 }
 
+.seatListContainer {
+  width: 450px;
+  height: 600px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px;
+  display: none;
+}
+
 .cinemaListTitle {
   height: 50px;
   font-size: 30px;
@@ -450,10 +459,12 @@ a {
   border-radius: 20px;
   background-color: #2b3e58;
   color: white;
+  margin-left:145px;
+  margin-top: 80px;
 }
 
 .rightNavBar {
-  width: 20vw;
+  width: 250px;
   display: flex;
   justify-content: space-around;
 }
@@ -463,6 +474,17 @@ a {
   margin: 0 auto;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(2, 1fr);
+}
+
+.screenDiv{
+  background-color: black;
+  height: 200px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  margin-bottom: 20px;
 }
 
 .visible {

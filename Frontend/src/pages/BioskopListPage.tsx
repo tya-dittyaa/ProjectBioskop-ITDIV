@@ -65,11 +65,11 @@ const seatList = [
   },
 ];
 
-const SeatDesign = ({ children, status, handleclick, id }) => {
+const SeatDesign = ({ children, status, handleclick, id, temp }) => {
   return (
     <div
       className={`${status} seatDetail`}
-      onClick={() => handleclick(status, children, id)}
+      onClick={() => handleclick(status, id, temp)}
     >
       {children}
     </div>
@@ -83,39 +83,15 @@ const CinemaLists = ({ children, handleclick, bioskop }) => {
   );
 };
 
-const TimeLists = ({ children, handleclick }) => {
+const TimeLists = ({ children, handleclick, schedule }) => {
   return (
-    <div onClick={() => handleclick(children)} className="cinemaLists">
+    <div onClick={() => handleclick(schedule)} className="cinemaLists">
       {children}
     </div>
   );
 };
 const BioskopListPage = () => {
-  const [takenSeat, setTakenSeat] = useState([
-    {
-      id: 1,
-      rowCharacter: "A",
-      columnNumber: 1,
-    },
-  ]);
-
-  useEffect(() => {
-    //kosongin takenSeat
-    // setTakenSeat([]);
-    //fetch masukkin ke takenSeat
-    seatList.map((seat, idx) => {
-      for (let i = 0; i < takenSeat.length; i++) {
-        let taken = takenSeat[i];
-        if (
-          seat.columnNumber === taken.columnNumber &&
-          seat.rowCharacter === taken.rowCharacter
-        ) {
-          seatList[idx].status = "taken";
-          break;
-        }
-      }
-    });
-  }, []);
+  const [purchasedSeat, setPurchasedSeat] = useState([]);
 
   const navigate = useNavigate();
   const [timeVisibility, setTimeVisibility] = useState(false);
@@ -123,8 +99,8 @@ const BioskopListPage = () => {
   const [cinemaData, setCinemaData] = useState({});
   const [cinemaList, setCinemaList] = useState([]);
   const [timeList, setTimeList] = useState([]);
-  const [time, setTime] = useState("");
-  const [seats, setSeats] = useState([{}]);
+  const [scheduleData, setSchedule] = useState({});
+  const [seats, setSeats] = useState([]);
   const handleClickCinema = (cinema) => {
     setTimeVisibility(true);
     setCinemaData(cinema);
@@ -152,17 +128,68 @@ const BioskopListPage = () => {
     getTime();
   };
 
-  const handleClickTime = (time) => {
-    setTime(time);
+  const handleClickTime = (schedule) => {
+    setSchedule(schedule);
     setSeatVisibility(true);
+    setPurchasedSeat([]);
+    const getTaken = async () => {
+      try {
+        const response = await fetch(
+          "https://api-bioskop13.dittyaa.my.id/seat/purchased",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer fredjefdrewkardit",
+            },
+            body: JSON.stringify({ scheduleId: schedule.scheduleId }),
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        setPurchasedSeat(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getTaken();
+    // cek taken seat
+    seatList.map((seat, idx) => {
+      for (let i = 0; i < purchasedSeat.length; i++) {
+        let taken = purchasedSeat[i];
+        if (
+          seat.columnNumber === taken.columnNumber &&
+          seat.rowCharacter === taken.rowCharacter
+        ) {
+          seatList[idx].status = "taken";
+          break;
+        }
+      }
+    });
   };
 
-  const handleClickSeat = (status, seatname, id) => {
+  const handleClickSeat = (status, id, temp) => {
+    let seatTemp = {
+      columnNumber: temp.columnNumber,
+      rowCharacter: temp.rowCharacter,
+    };
     if (status === "available") {
       seatList[id].status = "taken";
-      setSeats((prevSeats) => [...prevSeats, seatname]);
+      setSeats((prevSeats) => [...prevSeats, seatTemp]);
+    } else {
+      for (let i = 0; i < seats.length; i++) {
+        if (
+          temp.columnNumber === seats[i].columnNumber &&
+          temp.rowCharacter === seats[i].rowCharacter
+        ) {
+          seats.splice(i, 1);
+          break; 
+        }
+      }
     }
   };
+
   const { id } = useParams();
   const [movies, setMovies] = useState([]);
   useEffect(() => {
@@ -200,6 +227,7 @@ const BioskopListPage = () => {
         );
         const data = await response.json();
         setCinemaList(data);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -208,6 +236,14 @@ const BioskopListPage = () => {
     getMovie();
     getCinema();
   }, []);
+
+  const handleBack = () => {
+    setSeatVisibility(false);
+    setSeats([]);
+    seatList.forEach((s) => {
+      s.status = "available";
+    });
+  };
 
   return (
     <>
@@ -246,27 +282,6 @@ const BioskopListPage = () => {
               );
             }
           })}
-          {/* <div className="summaryHeader" id="bioskopMovies">
-            <img src={avengerPic} className="summaryPic"></img>
-            <div className="summaryHeaderRight" id="bioskopMovie">
-              <p className="boldSpan">Movie Name:</p>
-              <p style={{ fontSize: "20px" }}>Avengers: Endgame</p>
-              <p>
-                <span className="boldSpan">Rating:</span> 9.5
-              </p>
-            </div>
-          </div> */}
-          {/* <div className="summaryTicket">
-            <span className="boldSpan">Synopsis:</span>
-            <p>
-              After the devastating events of Avengers: Infinity War (2018), the
-              universe is in ruins due to the efforts of the Mad Titan, Thanos.
-              With the help of remaining allies, the Avengers must assemble once
-              more in order to undo Thanos's actions and undo the chaos to the
-              universe, no matter what consequences may be in store, and no
-              matter who they face...
-            </p>
-          </div> */}
         </div>
         <div
           className={`bioskopListContainer ${timeVisibility ? "" : "visibles"}`}
@@ -299,7 +314,11 @@ const BioskopListPage = () => {
           </p>
           <div className="cinemaListScroll">
             {timeList.map((time, idx) => (
-              <TimeLists key={idx} handleclick={handleClickTime}>
+              <TimeLists
+                key={idx}
+                handleclick={handleClickTime}
+                schedule={time}
+              >
                 {time.showTime}
               </TimeLists>
             ))}
@@ -309,22 +328,21 @@ const BioskopListPage = () => {
 
       <div className={`seatContainer ${seatVisibility ? "visibles" : ""}`}>
         <div
-          className={`bioskopListContainer ${seatVisibility ? "visibles" : ""}`}
+          className={`seatListContainer ${seatVisibility ? "visibles" : ""}`}
         >
           <p className="cinemaListTitle">
-            <span
-              style={{ cursor: "pointer" }}
-              onClick={() => setSeatVisibility(false)}
-            >
+            <span style={{ cursor: "pointer" }} onClick={handleBack}>
               &larr;
             </span>
-            {time} (Pick Available Seats)
+            {scheduleData.showTime} (Pick Available Seats)
           </p>
+          <div className="screenDiv">screen</div>
           <div className="seatDiv">
             {seatList.map((seat, idx) => (
               <SeatDesign
                 key={idx}
                 id={idx}
+                temp={seat}
                 handleclick={handleClickSeat}
                 status={seat.status}
               >
