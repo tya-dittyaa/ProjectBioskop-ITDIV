@@ -7,8 +7,6 @@ const NavBar = () =>{
         <div className="leftNavbar">
           <Link to={"/"}>NontonYuk</Link>
           <Link to={"/movie"}>Movie</Link>
-          <Link to={"/bioskop"}>Bioskop</Link>
-          <Link to={"/payment"}>Payment</Link>
         </div>
         <div className="rightNavBar">
           <Link className={loggedIn==='true' ? "visible" : "unVisible"} to={"/account"}>
