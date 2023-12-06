@@ -91,7 +91,8 @@ const TimeLists = ({ children, handleclick, schedule }) => {
   );
 };
 const BioskopListPage = () => {
-  const [purchasedSeat, setPurchasedSeat] = useState([]);
+  // const [purchasedSeat, setPurchasedSeat] = useState([]);
+  let purchasedSeat = [{}];
 
   const navigate = useNavigate();
   const [timeVisibility, setTimeVisibility] = useState(false);
@@ -119,7 +120,8 @@ const BioskopListPage = () => {
           }
         );
         const data = await response.json();
-        setTimeList(data);
+        console.log(data.data);
+        setTimeList(data.data);
       } catch (error) {
         console.log(error);
       }
@@ -129,9 +131,11 @@ const BioskopListPage = () => {
   };
 
   const handleClickTime = (schedule) => {
+    // console.log("id "+schedule.scheduleId)
     setSchedule(schedule);
     setSeatVisibility(true);
-    setPurchasedSeat([]);
+    // setPurchasedSeat([]);
+    purchasedSeat = [];
     const getTaken = async () => {
       try {
         const response = await fetch(
@@ -146,28 +150,32 @@ const BioskopListPage = () => {
           }
         );
         const data = await response.json();
-        console.log(data);
-        setPurchasedSeat(data);
+        purchasedSeat = data;
       } catch (error) {
         console.log(error);
       }
     };
 
-    getTaken();
-    // cek taken seat
-    seatList.map((seat, idx) => {
-      for (let i = 0; i < purchasedSeat.length; i++) {
-        let taken = purchasedSeat[i];
-        if (
-          seat.columnNumber === taken.columnNumber &&
-          seat.rowCharacter === taken.rowCharacter
-        ) {
-          seatList[idx].status = "taken";
-          break;
+    getTaken().then(()=>{
+      // cek taken seat
+      // console.log("length" + purchasedSeat.length)
+      seatList.map((seat, idx) => {
+        for (let i = 0; i < purchasedSeat.length; i++) {
+          let taken = purchasedSeat[i];
+          if (
+            seat.columnNumber === taken.columnNumber &&
+            seat.rowCharacter === taken.rowCharacter
+          ) {
+            seatList[idx].status = "taken";
+             console.log(seatList)
+            break;
+          }
         }
-      }
-    });
+      });
+
+    })
   };
+
 
   const handleClickSeat = (status, id, temp) => {
     let seatTemp = {
@@ -178,13 +186,14 @@ const BioskopListPage = () => {
       seatList[id].status = "taken";
       setSeats((prevSeats) => [...prevSeats, seatTemp]);
     } else {
+      // masih disini(masih error blm ilang)
       for (let i = 0; i < seats.length; i++) {
         if (
           temp.columnNumber === seats[i].columnNumber &&
           temp.rowCharacter === seats[i].rowCharacter
         ) {
           seats.splice(i, 1);
-          break; 
+          break;
         }
       }
     }
@@ -227,7 +236,7 @@ const BioskopListPage = () => {
         );
         const data = await response.json();
         setCinemaList(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -313,15 +322,19 @@ const BioskopListPage = () => {
             {cinemaData.name} (Pick a Time)
           </p>
           <div className="cinemaListScroll">
-            {timeList.map((time, idx) => (
-              <TimeLists
-                key={idx}
-                handleclick={handleClickTime}
-                schedule={time}
-              >
-                {time.showTime}
-              </TimeLists>
-            ))}
+            {timeList.length === 0 ? (
+              <p>No Schedule Available</p>
+            ) : (
+              timeList.map((time, idx) => (
+                <TimeLists
+                  key={idx}
+                  handleclick={handleClickTime}
+                  schedule={time}
+                >
+                  {time.showTime}
+                </TimeLists>
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -346,6 +359,7 @@ const BioskopListPage = () => {
                 handleclick={handleClickSeat}
                 status={seat.status}
               >
+                {console.log(seat.status)}
                 {seat.rowCharacter + seat.columnNumber}
               </SeatDesign>
             ))}
