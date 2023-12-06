@@ -59,7 +59,6 @@ export default function RegisterPage(){
         );
 
         if(response.status === 201){
-          alert("Register success");
           navigate('/login');
         }else if(response.status === 409){
           alert("Email has already exist!");

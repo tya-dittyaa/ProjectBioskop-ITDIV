@@ -42,7 +42,6 @@ export default function LoginPage() {
       );
 
       if (response.status === 202) {
-        alert("login success");
         window.localStorage.setItem("isLoggedIn", "true");
         const data = await response.json();
         const user = data.user;
