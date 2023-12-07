@@ -98,5 +98,6 @@ model TransactionDetail {
 model PaymentMethod {
   id          String        @id @default(auto()) @map("_id") @db.ObjectId
   name        String
+  image       String
   Transaction Transaction[]
 }
