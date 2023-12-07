@@ -2,69 +2,6 @@ import { useState, useEffect } from "react";
 import NavBar from "./assets/NavBar";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-const seatList = [
-  {
-    rowCharacter: "A",
-    columnNumber: 1,
-    status: "available",
-  },
-  {
-    rowCharacter: "A",
-    columnNumber: 2,
-    status: "available",
-  },
-  {
-    rowCharacter: "A",
-    columnNumber: 3,
-    status: "available",
-  },
-  {
-    rowCharacter: "A",
-    columnNumber: 4,
-    status: "available",
-  },
-  {
-    rowCharacter: "A",
-    columnNumber: 5,
-    status: "available",
-  },
-  {
-    rowCharacter: "A",
-    columnNumber: 6,
-    status: "available",
-  },
-  {
-    rowCharacter: "B",
-    columnNumber: 1,
-    status: "available",
-  },
-  {
-    rowCharacter: "B",
-    columnNumber: 2,
-    status: "available",
-  },
-  {
-    rowCharacter: "B",
-    columnNumber: 3,
-    status: "available",
-  },
-  {
-    rowCharacter: "B",
-    columnNumber: 4,
-    status: "available",
-  },
-  {
-    rowCharacter: "B",
-    columnNumber: 5,
-    status: "available",
-  },
-  {
-    rowCharacter: "B",
-    columnNumber: 6,
-    status: "available",
-  },
-];
-
 const SeatDesign = ({ children, status, handleclick, id, temp }) => {
   return (
     <div
@@ -92,8 +29,72 @@ const TimeLists = ({ children, handleclick, schedule }) => {
 };
 const BioskopListPage = () => {
   // const [purchasedSeat, setPurchasedSeat] = useState([]);
+  const [seatList,setSeatList] = useState([
+    {
+      rowCharacter: "A",
+      columnNumber: 1,
+      status: "available",
+    },
+    {
+      rowCharacter: "A",
+      columnNumber: 2,
+      status: "available",
+    },
+    {
+      rowCharacter: "A",
+      columnNumber: 3,
+      status: "available",
+    },
+    {
+      rowCharacter: "A",
+      columnNumber: 4,
+      status: "available",
+    },
+    {
+      rowCharacter: "A",
+      columnNumber: 5,
+      status: "available",
+    },
+    {
+      rowCharacter: "A",
+      columnNumber: 6,
+      status: "available",
+    },
+    {
+      rowCharacter: "B",
+      columnNumber: 1,
+      status: "available",
+    },
+    {
+      rowCharacter: "B",
+      columnNumber: 2,
+      status: "available",
+    },
+    {
+      rowCharacter: "B",
+      columnNumber: 3,
+      status: "available",
+    },
+    {
+      rowCharacter: "B",
+      columnNumber: 4,
+      status: "available",
+    },
+    {
+      rowCharacter: "B",
+      columnNumber: 5,
+      status: "available",
+    },
+    {
+      rowCharacter: "B",
+      columnNumber: 6,
+      status: "available",
+    },
+  ]);
+
   let purchasedSeat = [{}];
-  const [loading,setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [uncheck, setUncheck] = useState(false);
   const navigate = useNavigate();
   const [timeVisibility, setTimeVisibility] = useState(false);
   const [seatVisibility, setSeatVisibility] = useState(false);
@@ -120,7 +121,7 @@ const BioskopListPage = () => {
           }
         );
         const data = await response.json();
-        console.log(data.data);
+        // console.log(data.data);
         setTimeList(data.data);
       } catch (error) {
         console.log(error);
@@ -156,7 +157,7 @@ const BioskopListPage = () => {
       }
     };
 
-    getTaken().then(()=>{
+    getTaken().then(() => {
       // cek taken seat
       seatList.map((seat, idx) => {
         for (let i = 0; i < purchasedSeat.length; i++) {
@@ -170,32 +171,57 @@ const BioskopListPage = () => {
           }
         }
       });
-      setLoading(false)
-    })
+      setLoading(false);
+    });
   };
 
+  const [seatTemp,setSeatTemp] = useState({})
 
   const handleClickSeat = (status, id, temp) => {
-    let seatTemp = {
+   setSeatTemp((prevSeatTemp)=>( {
       columnNumber: temp.columnNumber,
       rowCharacter: temp.rowCharacter,
-    };
+    }))
     if (status === "available") {
       seatList[id].status = "taken";
-      setSeats((prevSeats) => [...prevSeats, seatTemp]);
+      setSeats((prevSeats) => [...prevSeats, temp]);
     } else {
-      // masih disini(masih error blm ilang)
-      for (let i = 0; i < seats.length; i++) {
-        if (
-          temp.columnNumber === seats[i].columnNumber &&
-          temp.rowCharacter === seats[i].rowCharacter
-        ) {
-          seats.splice(i, 1);
-          break;
+      setSeats((prevSeats) => {
+        const seatsUpdate = [];
+
+        for (let i = 0; i < prevSeats.length; i++) {
+          const seat = prevSeats[i];
+          if (
+            temp.columnNumber !== seat.columnNumber ||
+            temp.rowCharacter !== seat.rowCharacter
+          ) {
+            seatsUpdate.push(seat);
+          }
         }
-      }
+
+        setLoading(true);
+        setUncheck(true);
+
+        return seatsUpdate;
+      });
     }
   };
+  
+
+useEffect(()=>{
+  if(uncheck===true){
+    seatList.map((seat) => {
+      if (
+        seatTemp.columnNumber === seat.columnNumber &&
+        seatTemp.rowCharacter === seat.rowCharacter
+      ) {
+        seat.status = "available";
+      }
+    });
+    setLoading(false);
+    setUncheck(false);
+  }
+},[uncheck])
 
   const { id } = useParams();
   const [movies, setMovies] = useState([]);
@@ -252,6 +278,10 @@ const BioskopListPage = () => {
       s.status = "available";
     });
   };
+
+  const handleCheckout = () => {
+    navigate('/payment')
+  }
 
   return (
     <>
@@ -350,25 +380,23 @@ const BioskopListPage = () => {
           </p>
           <div className="screenDiv">screen</div>
           <div className="seatDiv">
-            {loading? (<p>Loading...</p>):(
-
-            seatList.map((seat, idx) => (
-              <SeatDesign
-                key={idx}
-                id={idx}
-                temp={seat}
-                handleclick={handleClickSeat}
-                status={seat.status}
-              >
-                {console.log(seat.status)}
-                {seat.rowCharacter + seat.columnNumber}
-              </SeatDesign>
-            )
-            ))}
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              seatList.map((seat, idx) => (
+                <SeatDesign
+                  key={idx}
+                  id={idx}
+                  temp={seat}
+                  handleclick={handleClickSeat}
+                  status={seat.status}
+                >
+                  {seat.rowCharacter + seat.columnNumber}
+                </SeatDesign>
+              ))
+            )}
           </div>
-          <Link to="/payment">
-            <button className="seatButton">Checkout</button>
-          </Link>
+            <button className="seatButton" onClick={handleCheckout}>Checkout</button>
         </div>
       </div>
     </>
