@@ -53,7 +53,6 @@ export default function LoginPage() {
 
         navigate("/");
       } else if (response.status === 404) {
-        alert(user.email + " " + user.password);
         alert("Invalid email/password");
       }
     } catch (error) {
