@@ -29,7 +29,7 @@ const TimeLists = ({ children, handleclick, schedule }) => {
 };
 const BioskopListPage = () => {
   // const [purchasedSeat, setPurchasedSeat] = useState([]);
-  const [seatList,setSeatList] = useState([
+  const [seatList, setSeatList] = useState([
     {
       rowCharacter: "A",
       columnNumber: 1,
@@ -121,7 +121,6 @@ const BioskopListPage = () => {
           }
         );
         const data = await response.json();
-        // console.log(data.data);
         setTimeList(data.data);
       } catch (error) {
         console.log(error);
@@ -132,10 +131,8 @@ const BioskopListPage = () => {
   };
 
   const handleClickTime = (schedule) => {
-    // console.log("id "+schedule.scheduleId)
     setSchedule(schedule);
     setSeatVisibility(true);
-    // setPurchasedSeat([]);
     purchasedSeat = [];
     const getTaken = async () => {
       try {
@@ -158,7 +155,6 @@ const BioskopListPage = () => {
     };
 
     getTaken().then(() => {
-      // cek taken seat
       seatList.map((seat, idx) => {
         for (let i = 0; i < purchasedSeat.length; i++) {
           let taken = purchasedSeat[i];
@@ -175,13 +171,13 @@ const BioskopListPage = () => {
     });
   };
 
-  const [seatTemp,setSeatTemp] = useState({})
+  const [seatTemp, setSeatTemp] = useState({});
 
   const handleClickSeat = (status, id, temp) => {
-   setSeatTemp((prevSeatTemp)=>( {
+    setSeatTemp((prevSeatTemp) => ({
       columnNumber: temp.columnNumber,
       rowCharacter: temp.rowCharacter,
-    }))
+    }));
     if (status === "available") {
       seatList[id].status = "taken";
       setSeats((prevSeats) => [...prevSeats, temp]);
@@ -206,22 +202,21 @@ const BioskopListPage = () => {
       });
     }
   };
-  
 
-useEffect(()=>{
-  if(uncheck===true){
-    seatList.map((seat) => {
-      if (
-        seatTemp.columnNumber === seat.columnNumber &&
-        seatTemp.rowCharacter === seat.rowCharacter
-      ) {
-        seat.status = "available";
-      }
-    });
-    setLoading(false);
-    setUncheck(false);
-  }
-},[uncheck])
+  useEffect(() => {
+    if (uncheck === true) {
+      seatList.map((seat) => {
+        if (
+          seatTemp.columnNumber === seat.columnNumber &&
+          seatTemp.rowCharacter === seat.rowCharacter
+        ) {
+          seat.status = "available";
+        }
+      });
+      setLoading(false);
+      setUncheck(false);
+    }
+  }, [uncheck]);
 
   const { id } = useParams();
   const [movies, setMovies] = useState([]);
@@ -260,7 +255,6 @@ useEffect(()=>{
         );
         const data = await response.json();
         setCinemaList(data);
-        // console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -269,6 +263,16 @@ useEffect(()=>{
     getMovie();
     getCinema();
   }, []);
+
+  useEffect(() => {
+    if (movies.length > 0) {
+      movies.forEach((film, idx) => {
+        if (film.id === id) {
+          setMovie(film);
+        }
+      });
+    }
+  }, [movies]);
 
   const handleBack = () => {
     setSeatVisibility(false);
@@ -279,47 +283,52 @@ useEffect(()=>{
     });
   };
 
+  const userLog = JSON.parse(localStorage.getItem("userLog"));
+  const [movieData, setMovie] = useState({});
+  //siniiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
   const handleCheckout = () => {
-    navigate('/payment')
-  }
+    console.log(movieData);
+    navigate("/payment", {
+      state: {
+        transaction: {
+          userId: userLog.id,
+          scheduleId: scheduleData.scheduleId,
+          paymentMethodId: "",
+          seat: seats,
+        },
+        summary: {
+          movie: movieData,
+        },
+      },
+    });
+  };
 
   return (
     <>
       <NavBar />
+      <Link
+        to={"/movie"}
+        style={{ color: "black", fontSize: "25px", marginLeft: "20px" }}
+      >
+        &larr; back
+      </Link>
       <div className="bioskopContainer">
         <div className="movieContainer">
           <p className="divTitle">Movie Detail</p>
-          {movies.map((movie) => {
-            if (movie.id === id) {
-              return (
-                <div
-                  className="summaryHeader"
-                  id="bioskopMovies"
-                  key={movie.id}
-                >
-                  <img src={movie.image_link} className="summaryPic"></img>
-                  <div className="summaryHeaderRight" id="bioskopMovie">
-                    <p className="boldSpan">Movie Name:</p>
-                    <p style={{ fontSize: "20px" }}>{movie.title}</p>
-                    <p>
-                      <span className="boldSpan">Rating:</span>{" "}
-                      {movie.filmRating}
-                    </p>
-                  </div>
-                </div>
-              );
-            }
-          })}
-          {movies.map((movie) => {
-            if (movie.id === id) {
-              return (
-                <div className="summaryTicket" key={movie.id}>
-                  <span className="boldSpan">Synopsis:</span>
-                  <p>{movie.description}</p>
-                </div>
-              );
-            }
-          })}
+          <div className="summaryHeader" id="bioskopMovies" key={movieData.id}>
+            <img src={movieData.image_link} className="summaryPic"></img>
+            <div className="summaryHeaderRight" id="bioskopMovie">
+              <p className="boldSpan">Movie Name:</p>
+              <p style={{ fontSize: "20px" }}>{movieData.title}</p>
+              <p>
+                <span className="boldSpan">Rating:</span> {movieData.filmRating}
+              </p>
+            </div>
+          </div>
+          <div className="summaryTicket" key={movieData.id}>
+            <span className="boldSpan">Synopsis:</span>
+            <p>{movieData.description}</p>
+          </div>
         </div>
         <div
           className={`bioskopListContainer ${timeVisibility ? "" : "visibles"}`}
@@ -396,7 +405,9 @@ useEffect(()=>{
               ))
             )}
           </div>
-            <button className="seatButton" onClick={handleCheckout}>Checkout</button>
+          <button className="seatButton" onClick={handleCheckout}>
+            Checkout
+          </button>
         </div>
       </div>
     </>
