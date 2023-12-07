@@ -46,6 +46,26 @@ export default function MovieList() {
     getComing();
   }, []);
 
+  const MovieCardNow =({id,image_link,title})=>{
+    return (
+      <Link to={`/bioskop/${id}`}>
+        <div className="nowPlayingList">
+          <img src={image_link} alt="" />
+          <span>{title}</span>
+        </div>
+      </Link>
+    );
+  }
+
+  const MovieCardComing = ({ image_link, title }) => {
+    return (
+      <div className="comingSoonList">
+        <img src={image_link} alt="" />
+        <span>{title}</span>
+      </div>
+    );
+  };
+
   return (
     <>
       <NavBar />
@@ -54,12 +74,9 @@ export default function MovieList() {
           <h1>NOW SHOWING</h1>
           <div className="nowPlayingContainer">
             {movies.map((movie) => (
-              <Link to={`/bioskop/${movie.id}`} key={movie.id}>
-                <div className="nowPlayingList">
-                  <img src={movie.image_link} alt="" />
-                  <span>{movie.title}</span>
-                </div>
-              </Link>
+              <MovieCardNow id={movie.id} key={movie.id} image_link={movie.image_link}
+              title ={movie.title}
+              ></MovieCardNow>
             ))}
           </div>
         </div>
@@ -68,10 +85,7 @@ export default function MovieList() {
           <h1>COMING SOON</h1>
           <div className="comingSoonContainer">
             {comings.map((coming) => (
-              <div className="comingSoonList" key={coming.id}>
-                <img src={coming.image_link} alt="" />
-                <span>{coming.title}</span>
-              </div>
+              <MovieCardComing image_link={coming.image_link} title={coming.title}></MovieCardComing>
             ))}
           </div>
         </div>
