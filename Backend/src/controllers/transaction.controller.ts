@@ -7,8 +7,8 @@ export class TransactionController {
   // * Create a transaction
   static async create(req: Request, res: Response) {
     type SeatInputType = {
-      row: string;
-      column: number;
+      rowCharacter: string;
+      columnNumber: number;
     };
 
     type TransactionInputType = {
@@ -46,8 +46,8 @@ export class TransactionController {
         const seatCreate = await prisma.purchasedSeat.create({
           data: {
             scheduleId: transaction.scheduleId,
-            rowCharacter: element.row,
-            columnNumber: element.column,
+            rowCharacter: element.rowCharacter,
+            columnNumber: element.columnNumber,
           },
         });
 
