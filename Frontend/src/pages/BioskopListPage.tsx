@@ -28,7 +28,6 @@ const TimeLists = ({ children, handleclick, schedule }) => {
   );
 };
 const BioskopListPage = () => {
-  // const [purchasedSeat, setPurchasedSeat] = useState([]);
   const [seatList, setSeatList] = useState([
     {
       rowCharacter: "A",

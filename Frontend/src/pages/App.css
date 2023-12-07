@@ -138,6 +138,7 @@ a {
 .divTitle {
   font-size: 25px;
   font-weight: 700;
+  margin-bottom: 1px;
 }
 
 .paymentMethodDiv {
@@ -171,9 +172,9 @@ a {
 
 .summaryHeader {
   width: 40vw;
-  height: 270px;
+  height: 15vw;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -239,6 +240,14 @@ a {
   padding: 15px;
   width: 400px;
   background-color: white;
+}
+
+.paymentScroll{
+  overflow: auto;
+}
+
+.paymentScroll::-webkit-scrollbar{
+  visibility: hidden;
 }
 
 .paymentModalDesc {
@@ -387,8 +396,8 @@ a {
 }
 
 #bioskopMovie {
-  height: 100px;
-  margin-bottom: 100px;
+  height: 10vw;
+  /* margin-bottom: 100px; */
 }
 
 #bioskopMovies {
