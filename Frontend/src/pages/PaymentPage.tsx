@@ -5,7 +5,7 @@ import gojekPic from "./assets/gopay.png";
 import ovoPic from "./assets/ovo.png";
 import avengerPic from "./assets/avenger.jpeg";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 const PaymentMethod = ({ image, children, setPayment }) => {
   return (
     <div className={`paymentMethodDiv`}>
@@ -21,19 +21,50 @@ const PaymentMethod = ({ image, children, setPayment }) => {
   );
 };
 const PaymentPage = () => {
+  const location = useLocation();
+  const transactionInput = location.state.transaction;
+  const movie = location.state.summary.movie;
+  const [seats,setSeats] = useState(transactionInput.seat)
+  console.log(seats[0]);
+  // console.log(transactionInput.seat[0]);
   const [payment, setpayment] = useState("");
+  const [paymentList, setpaymentList] = useState([])
   const [modalVisibility, setModalVisibility] = useState("notVisible");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const getPayment = async () => {
+      try {
+        const response = await fetch(
+          "https://api-bioskop13.dittyaa.my.id/payment/available",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer fredjefdrewkardit",
+            },
+          }
+        );
+        const data = await response.json();
+        console.log(data)
+        setpaymentList(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getPayment();
+
+  }, []);
+
   const handlePayment = () => {
-    const loggedIn = window.localStorage.getItem('isLoggedIn')
+    const loggedIn = window.localStorage.getItem("isLoggedIn");
     if (payment === "") {
       setModalVisibility("visible");
     } else {
-      if(loggedIn==='true'){
+      if (loggedIn === "true") {
         navigate("/account");
-      }else{
-        navigate('/login');
+      } else {
+        navigate("/login");
       }
     }
   };
@@ -62,23 +93,16 @@ const PaymentPage = () => {
         <div className="paymentSummaryContainer">
           <p className="divTitle">Payment Summary</p>
           <div className="summaryHeader">
-            <img src={avengerPic} className="summaryPic"></img>
+            <img src={movie.image_link} className="summaryPic"></img>
             <div className="summaryHeaderRight">
               <p>
-                <span className="boldSpan">Movie Name:</span> Avenger: Endgame
+                <span className="boldSpan">Movie Name:</span> {movie.title}
               </p>
               <p>
-                <span className="boldSpan">Rating:</span> 9.5
+                <span className="boldSpan">Rating:</span> {movie.filmRating}
               </p>
               <span className="boldSpan">Synopsis:</span>
-              <p>
-                After the devastating events of Avengers: Infinity War (2018),
-                the universe is in ruins due to the efforts of the Mad Titan,
-                Thanos. With the help of remaining allies, the Avengers must
-                assemble once more in order to undo Thanos's actions and undo
-                the chaos to the universe, no matter what consequences may be in
-                store, and no matter who they face...
-              </p>
+              <p>{movie.description}</p>
             </div>
           </div>
           <div className="summaryTicket">
@@ -91,7 +115,10 @@ const PaymentPage = () => {
               13:00
             </p>
             <p>
-              <span className="boldSpan">Seat: </span> 1B
+              <span className="boldSpan">Seat: </span>{" "}
+              {seats.map((seat, idx) => (
+                <span key={idx}>{seat.rowCharacter+seat.columnNumber}, </span>
+              ))}
             </p>
             <p>
               <span className="boldSpan">Ruangan: </span> 2

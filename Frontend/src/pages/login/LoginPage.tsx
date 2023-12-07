@@ -45,13 +45,6 @@ export default function LoginPage() {
         window.localStorage.setItem("isLoggedIn", "true");
         const data = await response.json();
         const user = data.user;
-        // console.log(user);
-        // setUserLog({
-          // id: user.id,
-          // email: user.email,
-          // password: user.password,
-          // name: user.name,
-        // });
         userLog.id  = user.id;
         userLog.email = user.email;
         userLog.password = user.password;
