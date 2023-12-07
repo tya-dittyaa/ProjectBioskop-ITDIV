@@ -20,10 +20,13 @@ const CinemaLists = ({ children, handleclick, bioskop }) => {
   );
 };
 
-const TimeLists = ({ children, handleclick, schedule }) => {
+const TimeLists = ({handleclick, schedule }) => {
+  const ticketDate = new Date(schedule.showTime);
+  const tanggal = ticketDate.toLocaleDateString()
+  const jam = ticketDate.toLocaleTimeString()
   return (
     <div onClick={() => handleclick(schedule)} className="cinemaLists">
-      {children}
+      {tanggal+" | "+jam}
     </div>
   );
 };
@@ -131,6 +134,9 @@ const BioskopListPage = () => {
 
   const handleClickTime = (schedule) => {
     setSchedule(schedule);
+    const ticketDate = new Date(schedule.showTime);
+    setDate(ticketDate.toLocaleDateString());
+    setTime(ticketDate.toLocaleTimeString());
     setSeatVisibility(true);
     purchasedSeat = [];
     const getTaken = async () => {
@@ -171,7 +177,7 @@ const BioskopListPage = () => {
   };
 
   const [seatTemp, setSeatTemp] = useState({});
-
+  const [cek,setCek] = useState(false)
   const handleClickSeat = (status, id, temp) => {
     setSeatTemp((prevSeatTemp) => ({
       columnNumber: temp.columnNumber,
@@ -181,21 +187,27 @@ const BioskopListPage = () => {
       seatList[id].status = "taken";
       setSeats((prevSeats) => [...prevSeats, temp]);
     } else {
+      
       setSeats((prevSeats) => {
         const seatsUpdate = [];
-
+        
         for (let i = 0; i < prevSeats.length; i++) {
           const seat = prevSeats[i];
+          console.log(temp)
+          console.log(seat)
           if (
             temp.columnNumber !== seat.columnNumber ||
             temp.rowCharacter !== seat.rowCharacter
-          ) {
+            ) {
             seatsUpdate.push(seat);
           }
+          if(i===prevSeats.length-1){
+            setCek(false)
+          }
         }
-
         setLoading(true);
         setUncheck(true);
+
 
         return seatsUpdate;
       });
@@ -204,6 +216,15 @@ const BioskopListPage = () => {
 
   useEffect(() => {
     if (uncheck === true) {
+      
+      setLoading(false);
+      setUncheck(false);
+    }
+    
+  }, [uncheck]);
+
+  useEffect(()=>{
+    if (cek === false) {
       seatList.map((seat) => {
         if (
           seatTemp.columnNumber === seat.columnNumber &&
@@ -212,10 +233,9 @@ const BioskopListPage = () => {
           seat.status = "available";
         }
       });
-      setLoading(false);
-      setUncheck(false);
+      setCek(true);
     }
-  }, [uncheck]);
+  },[cek])
 
   const { id } = useParams();
   const [movies, setMovies] = useState([]);
@@ -282,24 +302,33 @@ const BioskopListPage = () => {
     });
   };
 
+const [date, setDate] = useState("");
+const [time, setTime] = useState("");
   const userLog = JSON.parse(localStorage.getItem("userLog"));
   const [movieData, setMovie] = useState({});
-  //siniiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
   const handleCheckout = () => {
-    console.log(movieData);
-    navigate("/payment", {
-      state: {
-        transaction: {
-          userId: userLog.id,
-          scheduleId: scheduleData.scheduleId,
-          paymentMethodId: "",
-          seat: seats,
+    if(seats.length<=0){
+      alert("Please select minimum 1 seat")
+    }else{
+      navigate("/payment", {
+        state: {
+          transaction: {
+            userId: userLog.id,
+            scheduleId: scheduleData.scheduleId,
+            paymentMethodId: "",
+            seat: seats,
+          },
+          summary: {
+            movie: movieData,
+          },
+          jadwal:{
+            date: date,
+            time: time
+          }
         },
-        summary: {
-          movie: movieData,
-        },
-      },
-    });
+      });
+
+    }
   };
 
   return (
@@ -368,7 +397,6 @@ const BioskopListPage = () => {
                   handleclick={handleClickTime}
                   schedule={time}
                 >
-                  {time.showTime}
                 </TimeLists>
               ))
             )}
@@ -384,7 +412,7 @@ const BioskopListPage = () => {
             <span style={{ cursor: "pointer" }} onClick={handleBack}>
               &larr;
             </span>
-            {scheduleData.showTime} (Pick Available Seats)
+           (Pick Available Seats)
           </p>
           <div className="screenDiv">screen</div>
           <div className="seatDiv">
@@ -403,6 +431,14 @@ const BioskopListPage = () => {
                 </SeatDesign>
               ))
             )}
+          </div>
+          <div className="petunjuk">
+            <div className="availableDiv">#</div>
+            <span>Available</span>
+          </div>
+          <div className="petunjuk">
+            <div className="takenDiv">#</div>
+            <span>Taken/Purchased</span>
           </div>
           <button className="seatButton" onClick={handleCheckout}>
             Checkout

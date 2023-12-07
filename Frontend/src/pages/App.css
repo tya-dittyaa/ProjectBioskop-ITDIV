@@ -252,6 +252,25 @@ a {
   border: 1px solid white;
 }
 
+.recommendLink{
+  width: 200px;
+  background-color: #2d4059;
+  font-weight: 600;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  border-radius: 20px;
+  margin-top: 500px;
+  margin-right: 40vw;
+}
+
+.recommendLink:hover{
+  background-color: white;
+  color: black;
+}
+
 .paymentScroll{
   overflow: auto;
 }
@@ -466,6 +485,35 @@ a {
   cursor: pointer;
 }
 
+.availableDiv,.takenDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+.availableDiv{
+  color: #2b3e58;
+}
+
+.takenDiv{
+  background-color: #2b3e58;
+  color: white;
+}
+
+.petunjuk{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 2vw;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .available:hover {
   background-color: #2b3e58;
   color: white;
@@ -479,7 +527,6 @@ a {
   background-color: #2b3e58;
   color: white;
   margin-left:145px;
-  margin-top: 80px;
 }
 
 .rightNavBar {

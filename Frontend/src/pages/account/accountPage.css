@@ -91,9 +91,11 @@
     align-items: center;
     justify-content: center;
     z-index: 9999;
+    
 }
 .popUpDetail .popUpDetails{
-    background-color: white;
+    background-color: #152a46;
+    color: white;
     width: 500px;
     height: 500px;
     display: flex;
@@ -101,6 +103,7 @@
     /* align-items: center; */
     justify-content: center;
     padding: 15px;
+    border-radius: 20px;
 }
 .popUpDetail .popUpDetails h1{
     text-align: center;
@@ -111,15 +114,18 @@
     margin: 5px;
 }
 .popUpDetail .popUpDetails button{
-    color: white;
-    background-color: red;
+    color: #152a46;
+    background-color: white;
     padding: 15px 5px;
     border: none;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 800;
+    font-size: 20px;
 }
 .popUpDetail .popUpDetails button:hover{
-    background-color: #da1111;
+    background-color: #152a46;
+    color: white;
+    border: 1px solid white;
 }
 @media (max-width: 768px) {
 

@@ -4,13 +4,10 @@ import WatchingPic from "./assets/Watching.png";
 import starPic from "./assets/star.png";
 import { Link } from "react-router-dom";
 
-
-
-
 const HomePage = () => {
-  const [recommendMovies,setRecommend]= useState([])
+  const [recommendMovies, setRecommend] = useState([]);
   useEffect(() => {
-    const fetchRecommend=async ()=>{
+    const fetchRecommend = async () => {
       const response = await fetch(
         "https://api-bioskop13.dittyaa.my.id/film/random",
         {
@@ -22,15 +19,14 @@ const HomePage = () => {
         }
       );
       const data = await response.json();
-      console.log(data)
-      setRecommend(data)
-      
-    }
+      console.log(data);
+      setRecommend(data);
+    };
     fetchRecommend();
-}, []);
+  }, []);
 
   const [index, setIndex] = useState(0);
-  const loggedIn = window.localStorage.getItem('isLoggedIn')
+  const loggedIn = window.localStorage.getItem("isLoggedIn");
   const handlePrevIndex = () => {
     if (index === 0) {
       setIndex(recommendMovies.length - 1);
@@ -78,28 +74,27 @@ const HomePage = () => {
             <div className="rightArrow" onClick={handleNextIndex}>
               &gt;
             </div>
+
             <div className="popularMoviesLeft">
               <p className="popularMoviesTitle">
                 {recommendMovies[index].title}
               </p>
-              <p style={{fontSize: "20px"}}><img width={"20px"} src={starPic}></img> {recommendMovies[index].filmRating}</p>
+              <p style={{ fontSize: "20px" }}>
+                <img width={"20px"} src={starPic}></img>{" "}
+                {recommendMovies[index].filmRating}
+              </p>
               <p>{recommendMovies[index].description}</p>
             </div>
             <img
               src={recommendMovies[index].image_link}
               className="popularMoviesRight"
             ></img>
+            <Link to={`/bioskop/${recommendMovies[index].id}`} className="recommendLink">Book Now</Link>
           </>
         ) : (
           <p> Loading... </p>
         )}
       </div>
-
-      {/* {recommendMovies.map((movie,idx)=>(
-        <div key={idx}>
-          <p>{movie.title}</p>
-        </div>
-      ))} */}
     </>
   );
 };

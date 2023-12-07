@@ -24,6 +24,7 @@ const PaymentPage = () => {
   const location = useLocation();
   const transactionInput = location.state.transaction;
   const movie = location.state.summary.movie;
+  const jadwal = location.state.jadwal;
   const [seats, setSeats] = useState(transactionInput.seat);
   const [paymentId, setpaymentId] = useState("");
   const [paymentName, setpaymentName] = useState("");
@@ -94,7 +95,7 @@ const PaymentPage = () => {
     <>
       <NavBar />
       <Link
-        to={"/movie"}
+        to={`/bioskop/${movie.id}`}
         style={{ color: "black", fontSize: "25px", marginLeft: "20px" }}
       >
         &larr; back
@@ -132,11 +133,11 @@ const PaymentPage = () => {
           <div className="summaryTicket">
             <p>
               <span className="boldSpan">Date: </span>
-              Saturday, 20 Jun 2024
+              {jadwal.date}
             </p>
             <p>
               <span className="boldSpan">Time: </span>
-              13:00
+              {jadwal.time}
             </p>
             <p>
               <span className="boldSpan">Seat: </span>{" "}

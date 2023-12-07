@@ -9,7 +9,6 @@ import MovieListPage from "./pages/movieList/MovieList.tsx";
 import RegisterPage from "./pages/register/RegisterPage.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { UserProvider } from "./contexts/UserContext.tsx";
 const router = createBrowserRouter([
   { path: "/", element: <HomePage /> },
   { path: "/payment", element: <PaymentPage /> },
@@ -22,8 +21,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <UserProvider>
       <RouterProvider router={router} />
-    </UserProvider>
   </React.StrictMode>
 );
