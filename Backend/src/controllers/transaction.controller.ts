@@ -34,6 +34,7 @@ export class TransactionController {
       const transactionCreate = await prisma.transaction.create({
         data: {
           userId: transaction.userId,
+          scheduleId: transaction.scheduleId,
           paymentMethodId: transaction.paymentMethodId,
         },
       });
@@ -63,5 +64,57 @@ export class TransactionController {
     } catch (error) {
       return res.status(500).json({ message: "Internal server error" });
     }
+  }
+
+  // * User Transaction History
+  static async history(req: Request, res: Response) {
+    const { userId } = req.body;
+
+    // ! Req Body is Missing
+    if (!userId) {
+      return res.status(400).json({ message: "Request body is missing" });
+    }
+
+    // Check valid user
+    const userAcc = await prisma.user.findUnique({ where: { id: userId } });
+
+    // ! Invalid user
+    if (!userAcc) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    // Get transaction data
+    const transactionData = await prisma.transaction.findMany({
+      where: { userId },
+      select: {
+        id: true,
+        date: true,
+        paymentMethod: { select: { name: true } },
+        schedule: {
+          select: {
+            film: { select: { title: true } },
+            studio: {
+              select: {
+                theater: { select: { name: true, location: true } },
+                roomNumber: true,
+              },
+            },
+            showTime: true,
+          },
+        },
+        TransactionDetail: {
+          select: {
+            purchasedSeat: {
+              select: { rowCharacter: true, columnNumber: true },
+            },
+          },
+        },
+      },
+    });
+
+    return res.status(200).json({
+      message: "Get user transaction was successfully",
+      data: transactionData,
+    });
   }
 }

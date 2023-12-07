@@ -11,5 +11,11 @@ const routes = Router();
  */
 routes.post("/create", authorization, TransactionController.create);
 
+/**
+ * * Get a user history
+ * * <url>/transaction/history
+ */
+routes.post("/history", authorization, TransactionController.history);
+
 // * Export route
 export { routes as transactionRoute };
