@@ -92,7 +92,7 @@ export class TransactionController {
         paymentMethod: { select: { name: true } },
         schedule: {
           select: {
-            film: { select: { title: true } },
+            film: { select: { title: true, image_link: true } },
             studio: {
               select: {
                 theater: { select: { name: true, location: true } },

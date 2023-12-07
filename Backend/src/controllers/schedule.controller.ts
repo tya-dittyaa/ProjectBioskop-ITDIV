@@ -72,7 +72,8 @@ export class ScheduleController {
 
       const newObj = {
         scheduleId: element.id,
-        showTime: time,
+        showTime: date,
+        formatedShowTime: time,
       };
 
       arrayOfObjects.push(newObj);
