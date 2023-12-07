@@ -76,7 +76,7 @@ export default function RegisterPage(){
         checkEmail();
         checkPass();
         checkConfirm();
-        if(user.name!='' && user.password!='' && user.email!=''){
+        if (!userError && !emailError && !passError && !confirmPassError) {
           register();
         }
     }
