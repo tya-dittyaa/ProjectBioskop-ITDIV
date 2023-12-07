@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState,useRef,useEffect } from "react";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';

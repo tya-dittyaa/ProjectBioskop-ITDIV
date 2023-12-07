@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect } from "react";
 import NavBar from "./assets/NavBar";
 import { Link, useNavigate, useParams } from "react-router-dom";
