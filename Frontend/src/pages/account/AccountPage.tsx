@@ -1,15 +1,40 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './accountPage.css'
 import NavBar from '../assets/NavBar';
 import { useNavigate } from 'react-router-dom';
 export default function AccountPage(){
     const userLog = JSON.parse(localStorage.getItem("userLog"));
     const [popup,setPopUp] = useState(false);
+    const [history,setHistory] = useState([{}])
     const navigate = useNavigate()
     const handleLogout = () =>{
         window.localStorage.setItem('isLoggedIn',"")
         navigate('/')
     }
+
+    useEffect(()=>{
+        const getHistory = async () => {
+          try {
+            const response = await fetch(
+              "https://api-bioskop13.dittyaa.my.id/transaction/history",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: "Bearer fredjefdrewkardit",
+                },
+                body: JSON.stringify({userId :userLog.id})
+              }
+            );
+            const data = await response.json();
+            console.log(data.data);
+            setHistory(data.data);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        getHistory();
+    },[])
     return(
         <>
         <NavBar/>
