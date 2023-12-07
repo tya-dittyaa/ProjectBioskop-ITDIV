@@ -19,7 +19,6 @@ const HomePage = () => {
         }
       );
       const data = await response.json();
-      console.log(data);
       setRecommend(data);
     };
     fetchRecommend();

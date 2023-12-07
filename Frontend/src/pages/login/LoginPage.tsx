@@ -4,9 +4,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../assets/NavBar";
-// import { useUserContext } from "../../contexts/UserContext";
 export default function LoginPage() {
-  // const { userLog,setUserLog } = useUserContext();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -25,7 +23,6 @@ export default function LoginPage() {
   const pRef = useRef<HTMLParagraphElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
   const leftRef = useRef<HTMLDivElement>(null);
-  console.log(window.innerWidth);
   
   const login = async () => {
     try {
@@ -52,7 +49,7 @@ export default function LoginPage() {
         window.localStorage.setItem("userLog", JSON.stringify(userLog))
 
         navigate("/");
-      } else if (response.status === 404) {
+      } else if (response.status === 404 || response.status === 409) {
         alert("Invalid email/password");
       }
     } catch (error) {

@@ -30,7 +30,6 @@ export default function AccountPage(){
               }
             );
             const data = await response.json();
-            console.log(data.data[0]);
             setHistory(data.data);
             setLoading(false)
           } catch (error) {

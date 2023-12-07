@@ -193,8 +193,6 @@ const BioskopListPage = () => {
         
         for (let i = 0; i < prevSeats.length; i++) {
           const seat = prevSeats[i];
-          console.log(temp)
-          console.log(seat)
           if (
             temp.columnNumber !== seat.columnNumber ||
             temp.rowCharacter !== seat.rowCharacter
