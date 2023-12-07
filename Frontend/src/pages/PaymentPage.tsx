@@ -1,9 +1,4 @@
 import NavBar from "./assets/NavBar";
-import bcaPic from "./assets/bca.png";
-import mandiriPic from "./assets/mandiri.png";
-import gojekPic from "./assets/gopay.png";
-import ovoPic from "./assets/ovo.png";
-import avengerPic from "./assets/avenger.jpeg";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 const PaymentMethod = ({ image, children, setPaymentId,setPaymentName,paymentId }) => {
@@ -46,7 +41,6 @@ const PaymentPage = () => {
           }
         );
         const data = await response.json();
-        console.log(data);
         setpaymentList(data);
       } catch (error) {
         console.log(error);
@@ -62,7 +56,6 @@ const PaymentPage = () => {
     } else {
       if (loggedIn === "true") {
         transactionInput.paymentMethodId = paymentId
-        console.log(transactionInput)
         const createTransaction = async () => {
           try {
             const response = await fetch(
