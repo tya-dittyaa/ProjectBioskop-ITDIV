@@ -1,0 +1,633 @@
+/* #root { */
+/* max-width: 1280px; */
+/* margin: 0 auto; */
+/* padding: 2rem; */
+/* text-align: center; */
+/* } */
+
+/* .logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+} */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #eff4fa;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+/* HomePage */
+.centerDiv {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 8vw;
+}
+
+.daftarButton {
+  background-color: #2b3e58;
+  border: 1px solid #2b3e58;
+  width: 220px;
+  height: 60px;
+  color: white;
+  font-size: 25px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* NavBar */
+.navbarContainer {
+  display: flex;
+  background-color: #2d4059;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  height: 80px;
+  padding-left: 6vw;
+  padding-right: 6vw;
+  font-size: 20px;
+}
+
+.leftNavbar {
+  width: 200px;
+  display: flex;
+  justify-content: space-around;
+}
+
+/* Hero */
+.heroContainer {
+  color: white;
+  background-color: #2d4059;
+  height: 27vw;
+  padding: 6vw;
+  font-size: 4vw;
+}
+
+.watchingPic {
+  position: absolute;
+  width: 35vw;
+  right: 6vw;
+  top: 10vh;
+}
+
+/* PaymentPage */
+.paymentContainer {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.paymentMethodContainer,
+.paymentSummaryContainer {
+  width: 45vw;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  height: 600px;
+  border-radius: 20px;
+}
+
+.pageTitle {
+  font-size: 40px;
+  font-weight: 700;
+  margin: 20px;
+  margin-left: 100px;
+}
+
+.divTitle {
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 1px;
+}
+
+.paymentMethodDiv {
+  display: flex;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  justify-content: space-between;
+  padding: 25px;
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.paymentPicked {
+  margin-top: 50px;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.paymentRadio {
+  width: 15px;
+}
+
+.activePayment {
+  border: 1px solid #ffcd29;
+}
+
+.summaryPic {
+  width: 10vw;
+  margin-right: 20px;
+}
+
+.summaryHeader {
+  width: 40vw;
+  height: 15vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.summaryHeaderRight {
+  display: flex;
+  flex-direction: column;
+  height: 220px;
+  justify-content: space-around;
+}
+
+.summaryTicket {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  justify-content: space-around;
+  font-size: 18px;
+}
+
+.boldSpan {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.checkoutDiv {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.checkoutButton {
+  padding: 15px;
+  color: white;
+  background-color: #2d4059;
+  border-radius: 40px;
+  font-size: 18px;
+}
+
+.checkoutButton:hover,
+.daftarButton:hover,
+.seatButton:hover {
+  background-color: white;
+  color: black;
+  font-weight: 500;
+  border: 2px solid #2d4059;
+}
+
+.paymentModal {
+  top: 0;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+}
+
+.paymentModalTitle,
+.paymentModalDesc {
+  padding: 15px;
+  width: 400px;
+  background-color: white;
+}
+
+.logoutButton{
+  margin-top: 20px;
+  padding: 8px;
+  border-radius: 10px;
+  background-color: white;
+  color: #2b3e58;
+  font-weight: 700;
+  border: 1px solid white;
+}
+
+.recommendLink{
+  width: 200px;
+  background-color: #2d4059;
+  font-weight: 600;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  border-radius: 20px;
+  margin-top: 500px;
+  margin-right: 40vw;
+}
+
+.recommendLink:hover{
+  background-color: white;
+  color: black;
+}
+
+.paymentScroll{
+  overflow: auto;
+}
+
+.paymentScroll::-webkit-scrollbar{
+  visibility: hidden;
+}
+
+.paymentModalDesc {
+  height: 100px;
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.paymentModalTitle {
+  background-color: #2d4059;
+  color: white;
+  border-radius: 10px 10px 0 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.popularTitle {
+  font-size: 30px;
+  font-weight: 500;
+  margin-top: 20px;
+  margin-left: 7vw;
+  margin-bottom: 2vw;
+}
+
+.popularMoviesContainer {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  width: 84vw;
+  height: 600px;
+  margin-left: 8vw;
+  margin-bottom: 100px;
+  display: flex;
+}
+
+.leftArrow,
+.rightArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 40px;
+  position: absolute;
+  top: 45%;
+  width: 30px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  color: white;
+}
+
+.rightArrow {
+  right: 0;
+}
+
+.leftArrow {
+  left: 0;
+}
+
+.popularMoviesLeft {
+  position: absolute;
+  top: 60px;
+  left: 7%;
+  color: white;
+  width: 40%;
+  font-size: 1.5vw;
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  justify-content: space-around;
+}
+
+.popularMoviesRight {
+  position: absolute;
+  right: 10%;
+  width: 400px;
+  height: 600px;
+}
+
+.popularMoviesTitle {
+  font-size: 50px;
+  font-weight: 600;
+}
+
+.popularMoviesCard {
+  color: white;
+  font-size: 15px;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.popularMoviesPic {
+  width: 100px;
+  height: 150px;
+}
+
+/* BioskopPage */
+
+.bioskopContainer {
+  width: 70vw;
+  margin: auto;
+  margin-top: 70px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.movieContainer {
+  padding: 20px;
+  width: 29vw;
+  height: 550px;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.bioskopListContainer {
+  width: 35vw;
+  height: 600px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px;
+  display: none;
+}
+
+.seatListContainer {
+  width: 450px;
+  height: 600px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px;
+  display: none;
+}
+
+.cinemaListTitle {
+  height: 50px;
+  font-size: 30px;
+  font-weight: 500;
+  border-bottom: 4px solid #2b3e58;
+}
+
+#bioskopMovie {
+  height: 10vw;
+  /* margin-bottom: 100px; */
+}
+
+#bioskopMovies {
+  width: 22vw;
+}
+
+.cinemaLists {
+  width: 35vw;
+  padding: 20px;
+  border-bottom: 1px solid #2b3e58;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.cinemaLists:hover {
+  background-color: #2b3e58;
+  color: white;
+}
+
+.cinemaListScroll {
+  overflow-y: auto;
+  height: 500px;
+}
+
+.cinemaListScroll::-webkit-scrollbar {
+  display: none;
+}
+
+.seatContainer {
+  top: 0;
+  display: none;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+}
+
+.seatDetail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  color: white;
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  background-color: #2b3e58;
+  border: 1px solid #2b3e58;
+}
+
+.available {
+  background-color: white;
+  color: #2b3e58;
+  cursor: pointer;
+}
+
+.availableDiv,.takenDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+.availableDiv{
+  color: #2b3e58;
+}
+
+.takenDiv{
+  background-color: #2b3e58;
+  color: white;
+}
+
+.petunjuk{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 2vw;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.available:hover {
+  background-color: #2b3e58;
+  color: white;
+}
+
+.seatButton {
+  width: 100px;
+  padding: 10px;
+  border: 1px solid #2b3e58;
+  border-radius: 20px;
+  background-color: #2b3e58;
+  color: white;
+  margin-left:145px;
+}
+
+.rightNavBar {
+  width: 250px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.seatDiv {
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.screenDiv{
+  background-color: black;
+  height: 200px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.visibles {
+  display: flex;
+  flex-direction: column;
+}
+
+.unVisible {
+  visibility: hidden;
+}
+
+@media (max-width: 1265px) {
+  .summaryTicket {
+    font-size: 15px;
+  }
+
+  .summaryHeaderRight p {
+    font-size: 13px;
+  }
+  #timeTitle {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 1165px) {
+  .popularMoviesRight {
+    width: 300px;
+    height: 500px;
+  }
+}
+
+@media (max-width: 950px) {
+  .paymentMethodDiv {
+    font-size: 16px;
+  }
+
+  .paymentMethodDiv img {
+    width: 60px;
+  }
+  #timeTitle {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 850px) {
+  .popularMoviesRight {
+    width: 200px;
+    height: 400px;
+  }
+
+  .summaryTicket {
+    font-size: 12px;
+  }
+
+  .boldSpan,
+  .summaryHeader {
+    font-size: 15px;
+  }
+
+  #timeTitle {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  .navbarContainer {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 590px) {
+  .popularMoviesRight {
+    width: 150px;
+    height: 350px;
+  }
+}

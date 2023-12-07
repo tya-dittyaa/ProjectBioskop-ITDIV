@@ -1,0 +1,112 @@
+
+.movieList .nowPlaying h1{
+    text-align: center;
+    background: linear-gradient(to right, black, darkblue);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 20px 0;
+    font-weight: bold;
+}
+.movieList .nowPlayingContainer{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,270px);
+    gap: 30px 15px;
+    justify-content: center;
+}
+.movieList .nowPlayingContainer .nowPlayingList{
+    height: 400px;
+    border-radius: 15px;
+    position: relative;   
+    cursor: pointer;
+    overflow: hidden;
+    
+}
+.movieList .nowPlayingContainer .nowPlayingList img{
+    width: 100%;
+    height: 400px;
+    /* border-radius: 15px; */
+    /* filter: brightness(70%); */
+}
+.movieList .nowPlayingContainer .nowPlayingList span{
+    position: absolute;
+    
+    left: 0;
+    bottom: 5px;
+    color: white;
+    display: none;
+    margin: 10px;
+    font-weight: bold;
+}
+.movieList .nowPlayingContainer .nowPlayingList:hover{
+    transform: scale(1.03);
+}
+.movieList .nowPlayingContainer .nowPlayingList:hover img{
+    filter: brightness(50%);
+    
+}
+.movieList .nowPlayingContainer .nowPlayingList:hover span{
+   display: inline;
+}
+.movieList .comingSoon{
+    background-color: #d7d7d7;
+    padding: 10px 0;
+    margin-top: 40px;
+}
+.movieList .comingSoon h1{
+    text-align: center;
+    background: linear-gradient(to right, black, darkblue);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 40px 0;
+    font-weight: bold;
+}
+.movieList .comingSoonContainer{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,270px);
+    gap: 30px 15px;
+    justify-content: center;
+}
+.movieList .comingSoonContainer .comingSoonList{
+    height: 400px;
+    border-radius: 15px;
+    position: relative;   
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.movieList .comingSoonContainer .comingSoonList img{
+    width: 100%;
+    height: 400px;
+    /* border-radius: 15px; */
+    filter: brightness(0%);
+    transition: .3s;
+}
+.movieList .comingSoonContainer .comingSoonList span{
+    position: absolute;
+    text-align: center;
+    color: black;
+    color: white;
+    margin: 10px;
+    font-weight: bold;
+    transition: .5s;
+}
+.movieList .comingSoonContainer .comingSoonList:hover{
+    transform: scale(1.03);
+}
+.movieList .comingSoonContainer .comingSoonList:hover img{
+    filter: brightness(50%);
+    
+}
+.movieList .comingSoonContainer .comingSoonList:hover span{
+    text-align: left;
+    bottom: 0;
+    left: 0;
+    color: white;
+}
