@@ -20,7 +20,7 @@ export default function AccountPage(){
                     <span className='username'>{userLog.name} </span>
                     <br />
                     <span>{userLog.email}</span>
-                    <button onClick={handleLogout}>Logout</button>
+                    <button onClick={handleLogout} className='logoutButton'>Logout</button>
                 </div>
                 <div className="purchaseHistory">
                     <h1 className='purchasettl'>Purchase History</h1>
