@@ -242,6 +242,16 @@ a {
   background-color: white;
 }
 
+.logoutButton{
+  margin-top: 20px;
+  padding: 8px;
+  border-radius: 10px;
+  background-color: white;
+  color: #2b3e58;
+  font-weight: 700;
+  border: 1px solid white;
+}
+
 .paymentScroll{
   overflow: auto;
 }
