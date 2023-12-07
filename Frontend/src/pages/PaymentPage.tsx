@@ -148,10 +148,10 @@ const PaymentPage = () => {
               <span className="boldSpan">Ruangan: </span> 2
             </p>
             <p>
-              <span className="boldSpan">Quantity: </span> 2
+              <span className="boldSpan">Quantity: </span> {seats.length}
             </p>
             <p>
-              <span className="boldSpan">Total Price: </span> Rp 120.000
+              <span className="boldSpan">Total Price: </span> Rp {60000*seats.length}
             </p>
           </div>
           <div className="checkoutDiv">
