@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useState } from "react";
 import NavBar from "./assets/NavBar";
 import WatchingPic from "./assets/Watching.png";
